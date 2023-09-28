@@ -1,0 +1,17 @@
+/* styles/Hero.module.css */
+.hero {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 70px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+
+.hero-title {
+  font-size: 96px;
+  margin: 10;
+  padding: 0;
+  font-family: "Luxurious Script", cursive; /* Toevoegen van het "Luxurious Script" lettertype */
+}
