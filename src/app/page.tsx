@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Hero from '@/components/Hero';
 import ProductList from '@/components/NewArrivals';
-
+import BrandSelect from '@/components/Brands';
 export default function Home() {
   return (
     <>
@@ -9,6 +9,7 @@ export default function Home() {
       <div>
         <Hero/>
         <ProductList/>
+        <BrandSelect/>
       </div>
     </>
   )
