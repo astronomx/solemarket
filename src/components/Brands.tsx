@@ -3,11 +3,11 @@ import React from 'react';
 
 const BrandSelect = () => { 
     const brands = [
-        { id: 1, label: 'Nike', image: '/images/nike.png' },
-        { id: 2, label: 'Adidas', image: '/images/adidas.png' },
-        { id: 3, label: 'Yeezy', image: '/images/yeezy.png' },
-        { id: 4, label: 'New balance', image: '/images/new_balance.png' },
-        { id: 5, label: 'gap', image: '/images/gap.png' },
+        { id: 1, label: '', image: '/images/nike.png' },
+        { id: 2, label: '', image: '/images/adidas.png' },
+        { id: 3, label: '', image: '/images/yeezy.png' },
+        { id: 4, label: ' ', image: '/images/new_balance.png' },
+        { id: 5, label: '', image: '/images/gap.png' },
         // ... Add more brands here
     ];
 
