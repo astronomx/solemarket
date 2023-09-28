@@ -38,10 +38,6 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className="md:hidden"> {/* Alleen weergegeven op kleine schermen */}
-        {/* Plaats hier je mobiele menu-activator, bijvoorbeeld een knop die het menu opent */}
-      </div>
-
       <div className="hidden md:block">
         <button className="font-bold text-[#098C4C] py-2 px-4">
           Login
