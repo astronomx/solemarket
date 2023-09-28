@@ -1,14 +1,14 @@
-// components/Hero.tsx
 import React from 'react';
-import Image from 'next/image';
-import styles from '../styling/Hero.module.css';
 
 const Hero: React.FC = () => {
   return (
-    <div className={styles.hero}>
-        <h1 className={styles['hero-title']}>Sole Market</h1>
+    <div className="bg-gray-800 text-white text-center py-16">
+      <div className="container mx-auto">
+        <h1 className="text-6xl font-serif">Sole Market</h1>
       </div>
+    </div>
   );
 };
 
 export default Hero;
+
