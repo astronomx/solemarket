@@ -1,9 +1,11 @@
-import Image from 'next/image'
+import Navbar from '../components/Navbar';
 
-export default function Home() {
+const Home = () => {
   return (
-    <>
-      <h1 className="flex justify-center text-lg">Hello World</h1>
-    </>
-  )
-}
+    <div>
+      <Navbar />
+    </div>
+  );
+};
+
+export default Home;
