@@ -2,8 +2,6 @@ import Link from 'next/link';
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 
-
-
 const Navbar = () => {
   return (
     <nav className="flex justify-between items-center border-b border-black p-4">
@@ -21,7 +19,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className="space-x-20">
+      <div className="hidden md:flex space-x-20">
         <Link href="/about" passHref>
           <span className="font-bold text-lg hover:text-[#098C4C]">Home</span>
         </Link>
@@ -40,7 +38,11 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div>
+      <div className="md:hidden"> {/* Alleen weergegeven op kleine schermen */}
+        {/* Plaats hier je mobiele menu-activator, bijvoorbeeld een knop die het menu opent */}
+      </div>
+
+      <div className="hidden md:block">
         <button className="font-bold text-[#098C4C] py-2 px-4">
           Login
         </button>
