@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 
 const ProductList = () => {
   const products = [
@@ -22,14 +24,30 @@ const ProductList = () => {
     { id: 18, name: 'Product 18' },
   ];
 
+  const [scrollX, setScrollX] = useState(0);
+
+  const scrollLeft = () => {
+    setScrollX(scrollX - 1);
+  };
+
+  const scrollRight = () => {
+    setScrollX(scrollX + 1);
+  };
+
+  const visibleProducts = products.slice(scrollX, scrollX + 18); // Toon 4 producten tegelijk
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4 ml-4" style={{ color: '#098C4C' }}>
         New Arrivals
       </h1>
-      <div className="flex overflow-x-auto whitespace-nowrap">
-        {products.map((product) => (
-          <div key={product.id} className="w-48 h-48 border border-gray-300 m-4 inline-flex items-center justify-center font-bold text-xl" style={{ minWidth: '170px' }}>
+      <div className="flex overflow-x-hidden whitespace-nowrap"> {/* Hier voeg je de CSS-klasse toe */}
+        {visibleProducts.map((product) => (
+          <div
+            key={product.id}
+            className="w-48 h-48 border border-gray-300 m-4 inline-flex items-center justify-center font-bold text-xl"
+            style={{ minWidth: '170px' }}
+          >
             {product.name}
           </div>
         ))}
@@ -37,11 +55,15 @@ const ProductList = () => {
       <div className="flex justify-end mt-4" style={{ marginRight: '100px' }}>
         <button
           className="text-black font-bold py-2 px-4 rounded-full mr-4"
+          onClick={scrollLeft}
+          disabled={scrollX === 0}
         >
           🡠
         </button>
         <button
           className="text-black font-bold py-2 px-4 rounded-full"
+          onClick={scrollRight}
+          disabled={scrollX + 4 >= products.length}
         >
           🡢
         </button>
