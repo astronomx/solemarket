@@ -32,20 +32,19 @@ const Navbar = () => {
         </div>
       </div>
       <div className="hidden md:flex space-x-20">
-        <Link href="/about" passHref>
+        <Link href="/Home" passHref>
           <span className="font-bold text-lg hover:text-[#098C4C]">Home</span>
         </Link>
-        <Link href="/about" passHref>
+        <Link href="/Brands" passHref>
           <span className="font-bold text-lg hover:text-[#098C4C]">Brands</span>
         </Link>
-
-        <Link href="/about" passHref>
+        <Link href="/NewArrivals" passHref>
           <span className="font-bold text-lg hover:text-[#098C4C]">New Arrivals</span>
         </Link>
-        <Link href="/about" passHref>
+        <Link href="/All" passHref>
           <span className="font-bold text-lg hover:text-[#098C4C]">All</span>
         </Link>
-        <Link href="/about" passHref>
+        <Link href="/Trending" passHref>
           <span className="font-bold text-lg hover:text-[#098C4C]">Trending</span>
         </Link>
       </div>
@@ -53,13 +52,13 @@ const Navbar = () => {
       <div className="hidden md:flex items-center space-x-4">
         <button className="font-bold text-[#098C4C] py-2 px-4">Login</button>
         <span className="font-bold text-gray-800">|</span>
-        <button className="font-bold text-black py-2 px-4">Sign Up</button>
+        <button className="font-bold text-black py-2 px-4">Register</button>
         <button><ShoppingCartIcon className="h-6 w-6 text-black" /></button>
       </div>
 
       {showOffcanvas && (
         <div className="fixed inset-0 bg-gray-700 bg-opacity-50 z-50">
-          <div className="absolute inset-y-0 left-0 max-w-xs w-full bg-white shadow-xl">
+          <div className="absolute inset-y-0 left-0 max-w-xs w-full bg-white shadow-xl bg-[#2C2C2C]">
             <div className="flex justify-end">
               <button onClick={handleToggleOffcanvas} className="p-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -68,11 +67,45 @@ const Navbar = () => {
               </button>
             </div>
             <div className="py-4 px-8">
-              <h2 className="text-2xl font-bold">Offcanvas</h2>
               <p className="mt-4">
-                Some text as placeholder. In real life you can have the elements you
-                have chosen. Like, text, images, lists, etc.
+                <Link href="/Home" passHref>
+                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">Home</span>
+                </Link>
+                <br />
+                <Link href="/Brands" passHref>
+                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">Brands</span>
+                </Link>
+                <br />
+                <Link href="/All" passHref>
+                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">All</span>
+                </Link>
+                <br />
+                <Link href="/Trending" passHref>
+                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">Trending</span>
+                </Link>
+                <br />
+                <Link href="/New Arrival" passHref>
+                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">New Arrival</span>
+                </Link>
+                <br />
+                <Link href="/Coming soon" passHref>
+                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">Coming soon</span>
+                </Link>
+                <br />
+                <Link href="/Selling" passHref>
+                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">Selling</span>
+                </Link>
+                <br />
+                <Link href="/Buying" passHref>
+                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">Buying</span>
+                </Link>
               </p>
+            </div>
+
+            <div className="hidden md:flex items-center">
+              <button className="font-bold text-lg text-[#098C4C] py-2 px-4">Login</button>
+              <span className="font-bold text-white">|</span>
+              <button className="font-bold text-lg text-white py-2 px-4">Register</button>
             </div>
           </div>
         </div>
