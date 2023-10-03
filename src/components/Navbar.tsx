@@ -1,14 +1,24 @@
+"use client";
+
 import Link from 'next/link';
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
-
+import React, { useState } from "react";
 
 const Navbar = () => {
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
+
+  const handleToggleOffcanvas = () => {
+    setShowOffcanvas(!showOffcanvas);
+  };
+
   return (
     <nav className="flex justify-between items-center border-b border-black p-4">
       <div className="flex items-center">
-        <button><Bars3Icon className="h-6 w-6 text-gray-500" /></button>
+        <button onClick={handleToggleOffcanvas}>
+          <Bars3Icon className="h-6 w-6 text-gray-500" />
+        </button>
         <div className="w-6 h-6 bg-white"></div>
         <div className="relative">
           <input
@@ -46,6 +56,27 @@ const Navbar = () => {
         <button className="font-bold text-black py-2 px-4">Sign Up</button>
         <button><ShoppingCartIcon className="h-6 w-6 text-black" /></button>
       </div>
+
+      {showOffcanvas && (
+        <div className="fixed inset-0 bg-gray-700 bg-opacity-50 z-50">
+          <div className="absolute inset-y-0 left-0 max-w-xs w-full bg-white shadow-xl">
+            <div className="flex justify-end">
+              <button onClick={handleToggleOffcanvas} className="p-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <div className="py-4 px-8">
+              <h2 className="text-2xl font-bold">Offcanvas</h2>
+              <p className="mt-4">
+                Some text as placeholder. In real life you can have the elements you
+                have chosen. Like, text, images, lists, etc.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
