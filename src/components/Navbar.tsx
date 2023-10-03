@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Bars3Icon } from "@heroicons/react/24/outline";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+
 
 const Navbar = () => {
   return (
@@ -38,16 +40,11 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className="hidden md:block">
-        <button className="font-bold text-[#098C4C] py-2 px-4">
-          Login
-        </button>
-
+      <div className="hidden md:flex items-center space-x-4">
+        <button className="font-bold text-[#098C4C] py-2 px-4">Login</button>
         <span className="font-bold text-gray-800">|</span>
-
-        <button className="font-bold text-black py-2 px-4">
-          Sign Up
-        </button>
+        <button className="font-bold text-black py-2 px-4">Sign Up</button>
+        <button><ShoppingCartIcon className="h-6 w-6 text-black" /></button>
       </div>
     </nav>
   );
