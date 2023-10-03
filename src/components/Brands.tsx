@@ -14,12 +14,14 @@ const BrandSelect = () => {
     return (
         <div className="flex justify-center overflow-x-auto whitespace-nowrap my-10">
             {brands.map((brand) => (
-                <div key={brand.id} className="flex flex-col w-64 h-64 border border-gray-300 m-4 items-center justify-center font-bold text-xl mx-5">
-                    
-                    <img src={brand.image} alt={brand.label} className="w-64 h-64" /> {/* Adjust the size as needed */}
+                <div
+                    key={brand.id}
+                    className="flex flex-col w-64 h-64 border border-gray-300 m-4 items-center justify-center font-bold text-xl mx-5 "
+                >
+                    <img src={brand.image} alt={brand.label}  className="w-64 h-64 hover:brightness-10 hover:sepia cursor-pointer filter transition-all duration-300" />
                     <div>{brand.label}</div>
                 </div>
-            ))}
+                ))}
         </div>
     );
 };
