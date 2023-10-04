@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import supabase from "@/config/supabaseClient"
 
 export default function Home() {
   return (
