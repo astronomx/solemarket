@@ -58,7 +58,7 @@ const Navbar = () => {
 
       {showOffcanvas && (
         <div className="fixed inset-0 bg-gray-700 bg-opacity-50 z-50">
-          <div className="absolute inset-y-0 left-0 max-w-xs w-full bg-white shadow-xl bg-[#2C2C2C]">
+          <div className="absolute inset-y-0 left-0 max-w-xs w-full bg-[#2C2C2C] shadow-xl bg-[#2C2C2C]">
             <div className="flex justify-end">
               <button onClick={handleToggleOffcanvas} className="p-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -102,10 +102,14 @@ const Navbar = () => {
               </p>
             </div>
 
-            <div className="hidden md:flex items-center">
-              <button className="font-bold text-lg text-[#098C4C] py-2 px-4">Login</button>
+            <div className="absolute bottom-0 left-0 w-full py-4 px-8 space-x-2">
+              <Link href="/Login" passHref>
+                <span className="font-bold text-lg text-white hover:text-[#098C4C]">Login</span>
+              </Link>
               <span className="font-bold text-white">|</span>
-              <button className="font-bold text-lg text-white py-2 px-4">Register</button>
+              <Link href="/Register" passHref>
+                <span className="font-bold text-lg text-white hover:text-[#098C4C]">Register</span>
+              </Link>
             </div>
           </div>
         </div>
