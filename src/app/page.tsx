@@ -1,14 +1,14 @@
 import React from 'react';
 import Hero from '@/components/Hero';
-import ProductList from '@/components/NewArrivals';
-import BrandSelect from '@/components/Brands';
+import Featured from '@/components/Featured';
+import Brands from '@/components/Brands';
 export default function Home() {
   return (
     <>
       <div>
         <Hero/>
-        <ProductList/>
-        <BrandSelect/>
+        <Featured/>
+        <Brands/>
       </div>
     </>
   )
