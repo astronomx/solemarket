@@ -31,35 +31,27 @@ export default async function Featured() {
     }
 
   return (
-    <div>
-      <h1 className="text-2x text-[#098C4C] font-bold mb-4 ml-4">
-        Featured
-      </h1>
-      <div className="flex overflow-x-hidden whitespace-nowrap">
-
-        {shoes.map((shoe) => (
-            <div key={shoe.id}>
-
+    <>
+        <div className="flex justify-center">
+            <div className="flex flex-col justify-center w-fit">
+                <h1 className="text-2x text-[#098C4C] font-bold mb-4 ml-4">Featured</h1>
+                <div className="flex justify-center space-x-5">
+                {shoes.map((shoe) => (
+                    <div key={shoe.id}>
+                        <div className="flex relative flex-col justify-center border-4 xl:border-2 p-4 rounded-md w-[180px] md:w-[230px] h-[250px] ease-in-out duration-300 hover:border-[#098C4C] hover:w-[240px] hover:h-[260px]">
+                            <img src={shoe.imageURL} className="w-32 self-center h-auto" alt="picture" />
+                            <div className="flex flex-col mt-2">
+                            <p className="font-bold text-sm md:text-lg">{shoe.name}</p>
+                            </div>
+                            <div className="absolute top-4 z-0">
+                            <p className="text-base md:text-xl text-[#098C4C]">€{shoe.price}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+                </div>
             </div>
-        ))}
-
-      </div>
-      {/* <div className="flex justify-end mt-4" style={{ marginRight: "100px" }}>
-        <button
-          className="text-black font-bold py-2 px-4 rounded-full mr-4"
-          onClick={scrollLeft}
-          disabled={scrollX === 0}
-        >
-          🡠
-        </button>
-        <button
-          className="text-black font-bold py-2 px-4 rounded-full"
-          onClick={scrollRight}
-          disabled={scrollX + 4 >= products.length}
-        >
-          🡢
-        </button>
-      </div> */}
-    </div>
+        </div>
+    </>
   );
 }
