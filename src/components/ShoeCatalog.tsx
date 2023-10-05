@@ -43,7 +43,7 @@ export default async function ShoeCatalog() {
                 <div className="flex flex-col mt-2">
                   <p className="font-bold text-sm md:text-lg">{shoe.name}</p>
                 </div>
-                <div className="absolute top-4">
+                <div className="absolute top-4 z-0">
                   <p className="text-base md:text-xl text-[#098C4C]">€{shoe.price}</p>
                 </div>
               </div>

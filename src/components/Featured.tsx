@@ -1,58 +1,50 @@
-"use client";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
-import React, { useState } from 'react';
+async function getShoes() {
+    const supabase = createServerComponentClient({
+      cookies,
+    });
+  
+    // fetching data vanuit supabase, we gebruiken de range() methode om de eerste 15 rows op te halen en displayen in de featured sectie.
+    const { data, error } = await supabase
+      .from("shoes")
+      .select("id, name, price, imageURL")
+      .range(0, 5);
+  
+    // Geeft een error als er iets mis is gegaan met het ophalen van de data. En anders returnt het de data.
+    if (error) {
+      throw error;
+    }
 
-export default function Featured() {
-  const products = [
-    { id: 1, name: 'Product 1' },
-    { id: 2, name: 'Product 2' },
-    { id: 3, name: 'Product 3' },
-    { id: 4, name: 'Product 4' },
-    { id: 5, name: 'Product 5' },
-    { id: 6, name: 'Product 6' },
-    { id: 7, name: 'Product 7' },
-    { id: 8, name: 'Product 8' },
-    { id: 9, name: 'Product 9' },
-    { id: 10, name: 'Product 10' },
-    { id: 11, name: 'Product 11' },
-    { id: 12, name: 'Product 12' },
-    { id: 13, name: 'Product 13' },
-    { id: 14, name: 'Product 14' },
-    { id: 15, name: 'Product 15' },
-    { id: 16, name: 'Product 16' },
-    { id: 17, name: 'Product 17' },
-    { id: 18, name: 'Product 18' },
-  ];
+    return data;
+}
 
-  const [scrollX, setScrollX] = useState(0);
+export default async function Featured() {
 
-  const scrollLeft = () => {
-    setScrollX(scrollX - 1);
-  };
+    let shoes: { id: number, name: string, price: number, imageURL: any }[] = [];
 
-  const scrollRight = () => {
-    setScrollX(scrollX + 1);
-  };
-
-  const visibleProducts = products.slice(scrollX, scrollX + 18); // Toon 4 producten tegelijk
+    try {
+        shoes = await getShoes();
+    } catch (error) {
+        console.error("Error fetching products:", error);
+    }
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4 ml-4" style={{ color: '#098C4C' }}>
-        New Arrivals
+      <h1 className="text-2x text-[#098C4C] font-bold mb-4 ml-4">
+        Featured
       </h1>
-      <div className="flex overflow-x-hidden whitespace-nowrap"> {/* Hier voeg je de CSS-klasse toe */}
-        {visibleProducts.map((product) => (
-          <div
-            key={product.id}
-            className="w-48 h-48 border border-gray-300 m-4 inline-flex items-center justify-center font-bold text-xl"
-            style={{ minWidth: '170px' }}
-          >
-            {product.name}
-          </div>
+      <div className="flex overflow-x-hidden whitespace-nowrap">
+
+        {shoes.map((shoe) => (
+            <div key={shoe.id}>
+
+            </div>
         ))}
+
       </div>
-      <div className="flex justify-end mt-4" style={{ marginRight: '100px' }}>
+      {/* <div className="flex justify-end mt-4" style={{ marginRight: "100px" }}>
         <button
           className="text-black font-bold py-2 px-4 rounded-full mr-4"
           onClick={scrollLeft}
@@ -67,7 +59,7 @@ export default function Featured() {
         >
           🡢
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
