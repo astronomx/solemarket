@@ -58,7 +58,7 @@ export default function Navbar() {
 
       {showOffcanvas && (
         <div className="fixed inset-0 bg-gray-700 bg-opacity-50 z-50">
-          <div className="absolute inset-y-0 left-0 max-w-xs w-full bg-[#2C2C2C] shadow-xl bg-[#2C2C2C]">
+          <div className="absolute inset-y-0 left-0 max-w-xs w-full shadow-xl bg-[#2C2C2C]">
             <div className="flex justify-end">
               <button onClick={handleToggleOffcanvas} className="p-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
