@@ -39,7 +39,9 @@ export default async function Featured() {
                 {shoes.map((shoe) => (
                     <div key={shoe.id}>
                         <div className="relative flex-col justify-center border-4 xl:border-2 p-4 rounded-md w-[180px] md:w-[230px] h-[250px] ease-in-out duration-300 hover:border-[#098C4C] hover:w-[240px] hover:h-[260px]">
+                          <div className="flex justify-center">
                             <img src={shoe.imageURL} className="w-32 self-center h-auto" alt="picture" />
+                          </div>
                             <div className="flex flex-col mt-2">
                             <p className="font-bold text-sm md:text-lg">{shoe.name}</p>
                             </div>
