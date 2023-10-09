@@ -38,7 +38,7 @@ export default async function ShoeCatalog() {
         <div className="flex flex-wrap justify-center gap-3 md:w-[900px]">
           {/* Mappen over de data zodat we het kunnen displayen */}
           {shoes.map((shoe) => (
-            <Link href={/catalog/ + shoe.slug} key={shoe.id}>
+            <Link href={`/catalog/${shoe.slug}`} key={shoe.id}>
               <div className="flex relative flex-col justify-center border-4 xl:border-2 p-4 rounded-md w-[180px] md:w-[230px] h-[250px] ease-in-out duration-300 hover:border-[#098C4C] hover:w-[240px] hover:h-[260px]">
                 <img src={shoe.imageURL} className="w-32 self-center h-auto" alt="picture" />
                 <div className="flex flex-col mt-2">
