@@ -52,7 +52,7 @@ export default function Navbar() {
       <div className="hidden md:flex items-center space-x-4">
         <button className="font-bold text-[#098C4C] py-2 px-4">Login</button>
         <span className="font-bold text-gray-800">|</span>
-        <button className="font-bold text-black py-2 px-4">Register</button>
+        <Link href="/register" className="font-bold text-lg hover:text-[#098C4C]">Register</Link>
         <button><ShoppingCartIcon className="h-6 w-6 text-black" /></button>
       </div>
 
