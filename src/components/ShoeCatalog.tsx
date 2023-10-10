@@ -1,13 +1,9 @@
-// Maakt een server-side client aan zodat we de async functies kunnen gebruiken. createServerComponentClient zoekt naar de environment variabelen die we hebben aangemaakt in de .env file.
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 import Link from "next/link";
-import Image from "next/image";
+
+import supabase from "@/config/supabaseClient";
+
 
 async function getProducts() {
-    const supabase = createServerComponentClient({
-      cookies,
-    });
 
     // fetching data vanuit supabase, we gebruiken de select() methode om alle data op te halen.
     const { data, error } = await supabase
