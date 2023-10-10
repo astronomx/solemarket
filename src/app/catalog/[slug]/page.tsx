@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Image from "next/image";
 
 // dit is een supabase client die we hebben aangemaakt in de config folder. zodat we de supabase functies kunnen gebruiken.
 import supabase from "@/config/supabaseClient";
@@ -54,9 +53,14 @@ export default function ShoeDetails() {
             {/* Hier renderen we de data van de shoeData state. Als de shoeData state leeg is dan laten we een loading icoon zien. */}
             {shoeData.name ? (
                 <>
-                    <h1 className="font-bold">{shoeData.name}</h1>
-                    <p className="text-[#098C4C]">{shoeData.price}</p>
-                    <img src={shoeData.imageURL} className="w-auto h-[60vh] " alt="" />
+                    <div className="flex justify-center min-h-screen fixed">
+                        <div className="flex flex-col justify-center">
+                            <h1 className="font-bold text-2xl">{shoeData.name}</h1>
+                            <div className="flex flex-row">
+                                <img src={shoeData.imageURL} className="w-auto h-[70vh]" alt={shoeData.name} />
+                            </div>
+                        </div>
+                    </div>
                 </>
             ) : (
                 <div className="flex justify-center items-center">

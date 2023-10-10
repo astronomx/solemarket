@@ -49,7 +49,7 @@ export default function Navbar() {
         </Link>
       </div>
 
-      <div className="hidden md:flex items-center space-x-4">
+      <div className="hidden md:flex items-center space-x-42">
         <button className="font-bold text-[#098C4C] py-2 px-4">Login</button>
         <span className="font-bold text-gray-800">|</span>
         <button className="font-bold text-black py-2 px-4">Register</button>
