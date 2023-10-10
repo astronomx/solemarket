@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
           <div className="md:col-span-1">
             <h3 className="text-xl font-semibold mb-4">Sneakers</h3>
             <ul>
-              <li><a href="/">Nike </a></li>
+              <li><a href="/">Nike</a></li>
               <li><a href="/">Air Jordan</a></li>
               <li><a href="/">Adidas</a></li>
               <li><a href="/">Yeezy</a></li>
