@@ -24,18 +24,18 @@ export default async function FilterMenu() {
 
     return(
         <>
-          <div className="flex flex-col">
-            <div className="flex flex-row items-center space-x-3">
+          <div className="flex flex-row m-5 md:text-lg">
+            <div className="flex flex-row items-center space-x-2">
               <input type="checkbox" name="nike" value={"NIKE"} />
               <label htmlFor="nike">Nike</label>
             </div>
 
-            <div className="flex flex-row items-center space-x-3">
+            <div className="flex flex-row items-center space-x-2 mx-4">
               <input type="checkbox" name="adidas" value={"ADIDAS"} />
               <label htmlFor="adidas">Adidas</label>
             </div>
 
-            <div className="flex flex-row items-center space-x-3">
+            <div className="flex flex-row items-center space-x-2">
               <input type="checkbox" name="jordan" value={"JORDAN"} />
               <label htmlFor="jordan">Jordan</label>
             </div>

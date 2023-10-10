@@ -4,8 +4,8 @@ import FilterMenu from "@/components/FilterMenu";
 export default function Catalog() {
   return(
     <>
-      <div className="flex justify-center">
-        <div className="flex flex-row">
+      <div className="flex justify-center mt-10">
+        <div className="flex flex-col">
           <FilterMenu />
           <ShoeCatalog />
         </div>

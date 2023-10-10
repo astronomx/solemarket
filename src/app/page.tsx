@@ -1,9 +1,15 @@
-import supabase from "@/config/supabaseClient"
-
+import React from 'react';
+import Hero from '@/components/Hero';
+import Featured from '@/components/Featured';
+import Brands from '@/components/Brands';
 export default function Home() {
   return (
     <>
-      <h1 className="flex justify-center text-lg">Hello World</h1>
+      <div>
+        <Hero/>
+        <Featured/>
+        <Brands/>
+      </div>
     </>
   )
 }
