@@ -27,7 +27,7 @@ export default function ShoeDetails() {
       try {
         const { data, error } = await supabase
           .from("shoes")
-          .select("id, name, brand, gender, category, price, imageURL, slug")
+          .select("id, name, brand, gender, category, price, items_left, imageURL, slug")
           .eq("slug", slug)
           .single();
 
@@ -39,8 +39,8 @@ export default function ShoeDetails() {
 
         if (data) {
           // Als er geen error is dan zetten we de data in de shoeData state.
-          const { name, brand, gender, category, price, imageURL, slug } = data;
-          setShoeData({ name, brand, gender, category, price, imageURL, slug });
+          const { name, brand, gender, category, price, items_left, imageURL, slug } = data;
+          setShoeData({ name, brand, gender, category, price, items_left, imageURL, slug });
         }
       } catch (error) {
         console.error("Error fetching shoe details:", error);
@@ -49,6 +49,14 @@ export default function ShoeDetails() {
 
     getShoeDetails();
     generateShoeSizes();
+
+    // Hier zorgen we ervoor dat de body niet kan scrollen als de component mount.
+    document.body.style.overflow = 'hidden';
+
+    // Effect gaat weg als de component unmount
+    return () => {
+      document.body.style.overflow = '';
+    };
 
     // We voegen de slug en router toe aan de dependency array zodat de useEffect hook opnieuw wordt uitgevoerd als de slug of router veranderd.
   }, [slug, router]);
@@ -69,7 +77,7 @@ export default function ShoeDetails() {
   }
 
   return (
-    <div className="">
+    <div className="h-screen">
       {/* Hier renderen we de data van de shoeData state. Als de shoeData state leeg is dan laten we een loading icoon zien. */}
       {shoeData.name ? (
         <>
@@ -140,6 +148,7 @@ export default function ShoeDetails() {
                 <tbody>
                   <tr className="text-[#098C4C] font-bold text-left">
                     <th>Name</th>
+                    <th>Items left</th>
                     <th>Brand</th>
                     <th>Gender</th>
                     <th>Category</th>
@@ -148,6 +157,7 @@ export default function ShoeDetails() {
                   </tr>
                   <tr>
                     <td>{shoeData.name}</td>
+                    <td>{shoeData.items_left}</td>
                     <td>{shoeData.brand}</td>
                     <td>{shoeData.gender}</td>
                     <td>{shoeData.category}</td>
