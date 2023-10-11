@@ -5,7 +5,7 @@ export default function Catalog() {
   return(
     <>
       <div className="flex justify-center mt-10">
-        <div className="flex flex-row">
+        <div className="flex flex-col">
           <FilterMenu />
           <ShoeCatalog />
         </div>
