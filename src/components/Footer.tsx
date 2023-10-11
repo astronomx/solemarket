@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
             <ul>
               <li><a href="/">Nike</a></li>
               <li><a href="/">Air Jordan</a></li>
-              <li><a href="/">Adidas</a></li>
+              <li><a href="/">Adidas </a></li>
               <li><a href="/">Yeezy</a></li>
               <li><a href="/">New Balance</a></li>
               <li><a href="/">All Sneakers</a></li>
