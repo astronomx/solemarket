@@ -76,6 +76,10 @@ export default function Navbar() {
                   <span className="font-bold text-lg text-white hover:text-[#098C4C]">Brands</span>
                 </Link>
                 <br />
+                <Link href="/" passHref>
+                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">New Arrivals</span>
+                </Link>
+                <br />
                 <Link href="/catalog" passHref>
                   <span className="font-bold text-lg text-white hover:text-[#098C4C]">All</span>
                 </Link>
@@ -84,21 +88,6 @@ export default function Navbar() {
                   <span className="font-bold text-lg text-white hover:text-[#098C4C]">Trending</span>
                 </Link>
                 <br />
-                <Link href="/" passHref>
-                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">New Arrival</span>
-                </Link>
-                <br />
-                <Link href="/" passHref>
-                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">Coming soon</span>
-                </Link>
-                <br />
-                <Link href="/Selling" passHref>
-                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">Selling</span>
-                </Link>
-                <br />
-                <Link href="/Buying" passHref>
-                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">Buying</span>
-                </Link>
               </p>
             </div>
 
