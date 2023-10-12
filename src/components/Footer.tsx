@@ -1,12 +1,33 @@
-import React from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
 
 const Footer: React.FC = () => {
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (window.scrollY > 100) {
+      setShowScrollButton(true);
+    } else {
+      setShowScrollButton(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <footer className="text-gray-400 border-t border-black">
       <div className="container mx-auto py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-    
-
           {/* Navigation */}
           <div className="md:col-span-1">
             <h3 className="text-xl font-semibold mb-4">Navigation</h3>
@@ -60,10 +81,17 @@ const Footer: React.FC = () => {
               <li><a href="/">About Us</a></li>
             </ul>
           </div>
-
         </div>
-        
-        {/* Copyright Text */}
+
+        {showScrollButton && (
+          <button
+            onClick={scrollToTop}
+            className="fixed bottom-4 right-4 p-2 bg-black text-white rounded-full w-10 h-10 cursor-pointer hover:bg-[#098C4C]"
+          >
+            🡩
+          </button>
+        )}
+
         <div className="mt-8 text-center">
           <p>&copy; {new Date().getFullYear()} Sole Market. All rights reserved.</p>
         </div>
