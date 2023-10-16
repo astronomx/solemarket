@@ -2,7 +2,6 @@ import Link from "next/link";
 
 import supabase from "@/config/supabaseClient";
 
-
 async function getProducts() {
 
     // fetching data vanuit supabase, we gebruiken de select() methode om alle data op te halen.
