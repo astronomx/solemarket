@@ -1,5 +1,8 @@
 "use client";
 import React, { useEffect, useState } from 'react';
+import { ImFacebook2} from "react-icons/im";
+import { BsInstagram } from "react-icons/bs";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Footer: React.FC = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -27,7 +30,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="text-black border-t border-black py-4 px-8">
       <div className="container mx-auto py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {/* Sneakers */}
           <div className="md:col-span-1">
             <h3 className="text-xl font-semibold mb-4">Sneakers</h3>
@@ -54,9 +57,10 @@ const Footer: React.FC = () => {
 
           {/* Customer Service */}
           <div className="md:col-span-1">
-            <h3 className="text-xl font-semibold mb-4">Customer Service</h3>
+            <h3 className="text-xl font-semibold mb-4">Policy</h3>
             <ul>
-              <li><a href="/">Ask your question</a></li>
+              <li><a href="/">Terms</a></li>
+              <li><a href="/">Privacy</a></li>
               <li><a href="/">Contact</a></li>
               <li><a href="/">About Us</a></li>
             </ul>
@@ -70,6 +74,22 @@ const Footer: React.FC = () => {
               <li><a href="/">Register</a></li>
             </ul>
           </div>
+
+          {/* Social icons */}
+          <div className="md:col-span-1">
+            <h3 className="text-xl font-semibold mb-4">Social Media</h3>
+            <div className="flex gap-6">
+              <a href="/" className="text-blue-600 hover:text-blue-800">
+                <ImFacebook2 className="text-2xl" />
+              </a>
+              <a href="/" className="text-pink-600 hover:text-pink-800">
+                <BsInstagram className="text-2xl" />
+              </a>
+              <a href="/" className="text-black hover:text-gray-600">
+                <FaXTwitter className="text-2xl" />
+              </a>
+            </div>
+          </div>
         </div>
 
         {showScrollButton && (
@@ -82,14 +102,8 @@ const Footer: React.FC = () => {
         )}
 
         <div className="mt-8 text-center">
-          <div className="flex justify-between items-center">
-            <div>
-              <a href="/terms" className="mr-2">Terms</a>
-              <a href="/privacy" className="ml-2">Privacy</a>
-            </div>
-            <div>
-              &copy; {new Date().getFullYear()} Sole Market. All rights reserved.
-            </div>
+          <div>
+            &copy; {new Date().getFullYear()} Sole Market. All rights reserved.
           </div>
         </div>
 
