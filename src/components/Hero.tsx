@@ -1,13 +1,25 @@
 import React from 'react';
 
-const Hero: React.FC = () => {
+export default function Hero() {
   return (
-    <div className="bg-gray-800 text-white text-center py-16" style={{ marginLeft: '750px', marginRight: '750px', marginTop: '100px', marginBottom: '30px' }}>
-      <div className="container mx-auto">
-        <h1 className="text-6xl font-serif">Sole Market</h1>
+    <>
+      <div className="flex flex-row snap-x snap-mandatory overflow-scroll w-[100vw] h-[50vh]">
+        <div className="flex items-center justify-center flex-shrink-0 snap-center w-screen ">
+          <img src="images/carousel/banner.jpg" alt="carasoul-item" className="rounded-lg drop-shadow-xl w-[40vw] h-[45vh]" />
+        </div>
+        <div className="flex items-center justify-center flex-shrink-0 snap-center w-screen ">
+          <img src="images/carousel/urban-model.jpg" alt="carasoul-item" className="rounded-lg drop-shadow-xl w-[40vw] h-[45vh]" />
+        </div>
+        <div className="flex items-center justify-center flex-shrink-0 snap-center w-screen ">
+          <img src="images/carousel/air-max.jpg" alt="carasoul-item" className="rounded-lg drop-shadow-xl w-[40vw] h-[45vh]" />
+        </div>
+        <div className="flex items-center justify-center flex-shrink-0 snap-center w-screen ">
+          <img src="images/carousel/pixar-shoe.jpg" alt="carasoul-item" className="rounded-lg drop-shadow-xl w-[40vw] h-[45vh]" />
+        </div>
+        <div className="flex items-center justify-center flex-shrink-0 snap-center w-screen ">
+          <img src="images/carousel/shoe-and-star.jpg" alt="carasoul-item" className="rounded-lg drop-shadow-xl w-[40vw] h-[45vh]" />
+        </div>
       </div>
-    </div>
+    </>
   );
-};
-
-export default Hero;
+}
