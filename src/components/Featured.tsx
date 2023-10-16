@@ -7,7 +7,7 @@ async function getShoes() {
     const { data, error } = await supabase
       .from("shoes")
       .select("id, name, price, imageURL, slug")
-      .range(0, 5);
+      .range(0, 6);
   
     // Geeft een error als er iets mis is gegaan met het ophalen van de data. En anders returnt het de data.
     if (error) {
