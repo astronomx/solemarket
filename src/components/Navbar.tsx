@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import supabase from '@/config/supabaseClient'
 
 export default function Navbar() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -13,6 +14,15 @@ export default function Navbar() {
     setShowOffcanvas(!showOffcanvas);
   };
 
+  const token = sessionStorage.getItem('token');
+  const session = token ? JSON.parse(token) : null;
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('token');
+    alert('Logout successful');
+    window.location.reload();
+  };
+  
   return (
     <nav className="flex justify-between items-center border-b border-black bg-white p-4 top-0 sticky z-10">
       <div className="flex items-center">
@@ -49,12 +59,25 @@ export default function Navbar() {
         </Link>
       </div>
 
-      <div className="hidden md:flex items-center space-x-4">
-        <button className="font-bold text-[#098C4C] py-2 px-4">Login</button>
-        <span className="font-bold text-gray-800">|</span>
-        <Link href="/register" className="font-bold text-lg hover:text-[#098C4C]">Register</Link>
-        <button><ShoppingCartIcon className="h-6 w-6 text-black" /></button>
-      </div>
+      {/* If session exists, render "Logged in" */}
+      {session ? (
+        <div className="hidden md:flex items-center space-x-4 ease-in-out duration-200">
+          <p className="text-[#098C4C] hover:text-black ease-in-out duration-200">{session.user.email}</p>
+          <span className="font-bold text-gray-800">|</span>
+          <Link href="/">
+            <button className="font-bold hover:text-[#098C4C] py-2 px-4 ease-in-out duration-200" onClick={handleLogout}>Logout</button>
+          </Link>
+        </div>
+      ) : (
+        <div className="hidden text-lg md:flex items-center space-x-4 ease-in-out duration-200">
+          <Link href="/login">
+            <button className="font-bold hover:text-[#098C4C] py-2 px-4 ease-in-out duration-200">Login</button>
+          </Link>
+          <span className="font-bold text-gray-800">|</span>
+          <Link href="/register" className="font-bold hover:text-[#098C4C] py-2 px-4 ease-in-out duration-200">Register</Link>
+          <button><ShoppingCartIcon className="h-6 w-6 text-black hover:text-[#098C4C] ease-in-out duration-200" /></button>
+        </div>
+      )}
 
       {showOffcanvas && (
         <div className="fixed inset-0 bg-gray-700 bg-opacity-50 z-50">
@@ -100,16 +123,6 @@ export default function Navbar() {
                   <span className="font-bold text-lg text-white hover:text-[#098C4C]">Buying</span>
                 </Link>
               </p>
-            </div>
-
-            <div className="absolute bottom-0 left-0 w-full py-4 px-8 space-x-2">
-              <Link href="/Login" passHref>
-                <span className="font-bold text-lg text-white hover:text-[#098C4C]">Login</span>
-              </Link>
-              <span className="font-bold text-white">|</span>
-              <Link href="/Register" passHref>
-                <span className="font-bold text-lg text-white hover:text-[#098C4C]">Register</span>
-              </Link>
             </div>
           </div>
         </div>

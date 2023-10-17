@@ -26,7 +26,7 @@ export default function Register() {
                 email: formData.email,
                 password: formData.password
             });
-            alert(`Confirmation link sent to ${data?.user?.email}`);
+            alert(`Confirmation link sent to ${formData.email}!`);
 
         } catch (error) {
             alert(`Error: ${error}`);
@@ -35,10 +35,10 @@ export default function Register() {
 
     return (
         <div className='flex flex-col justify-center w-full items-center mt-2'>
-            <h1 className='font-bold text-3xl self-start'>Register account</h1>
             <form onSubmit={handleSubmit} className='flex flex-col p-5 w-2/4'>
+            <h1 className='font-bold text-3xl self-start mb-4'>Register account</h1>
                 <input type="email" placeholder="Email" name="email" onChange={handleChange} className='bg-gray-200 ease-in-out duration-200 p-2 m-2 hover:border-[#098C4C] active:border-[#098C4C] border-2 rounded-lg' />
-                <input type="password" placeholder="Password" name="password" onChange={handleChange} className='bg-gray-200 ease-in-out duration-200 p-2 m-2 hover:border-[#098C4C] active:border-[#098C4C] border-2 rounded-lg' />
+                <input minLength={8} type="password" placeholder="Password" name="password" onChange={handleChange} className='bg-gray-200 ease-in-out duration-200 p-2 m-2 hover:border-[#098C4C] active:border-[#098C4C] border-2 rounded-lg' />
                 <button type="submit" className='bg-[#098C4C] hover:bg-[#47ad7c] ease-in-out duration-200 p-2 m-2 rounded-sm text-gray-200'>Register</button>
             </form>
         </div>
