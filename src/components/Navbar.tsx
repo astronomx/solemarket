@@ -6,6 +6,7 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import React, { useState, useEffect } from "react";
 import supabase from '@/config/supabaseClient'
+import { GetSession, GetUserEmail, GetLogOut } from '@/components/GetSession'
 
 export default function Navbar() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -14,15 +15,6 @@ export default function Navbar() {
     setShowOffcanvas(!showOffcanvas);
   };
 
-  const token = sessionStorage.getItem('token');
-  const session = token ? JSON.parse(token) : null;
-
-  const handleLogout = () => {
-    sessionStorage.removeItem('token');
-    alert('Logout successful');
-    window.location.reload();
-  };
-  
   return (
     <nav className="flex justify-between items-center border-b border-black bg-white p-4 top-0 sticky z-10">
       <div className="flex items-center">
@@ -59,13 +51,14 @@ export default function Navbar() {
         </Link>
       </div>
 
-      {/* If session exists, render "Logged in" */}
-      {session ? (
+      {GetSession() ? (
         <div className="hidden md:flex items-center space-x-4 ease-in-out duration-200">
-          <p className="text-[#098C4C] hover:text-black ease-in-out duration-200">{session.user.email}</p>
+          <p className="text-[#098C4C] hover:text-black ease-in-out duration-200">{GetUserEmail()}</p>
           <span className="font-bold text-gray-800">|</span>
           <Link href="/">
-            <button className="font-bold hover:text-[#098C4C] py-2 px-4 ease-in-out duration-200" onClick={handleLogout}>Logout</button>
+            <button className="font-bold hover:text-[#098C4C] py-2 px-4 ease-in-out duration-200" onClick={() => GetLogOut()}>
+              Logout
+            </button>
           </Link>
         </div>
       ) : (
@@ -90,7 +83,7 @@ export default function Navbar() {
               </button>
             </div>
             <div className="py-4 px-8">
-              <p className="mt-4">
+              <div className="mt-4">
                 <Link href="/" passHref>
                   <span className="font-bold text-lg text-white hover:text-[#098C4C]">Home</span>
                 </Link>
@@ -111,7 +104,7 @@ export default function Navbar() {
                   <span className="font-bold text-lg text-white hover:text-[#098C4C]">Trending</span>
                 </Link>
                 <br />
-              </p>
+              </div>
             </div>
           </div>
         </div>
