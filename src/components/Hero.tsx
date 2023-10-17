@@ -34,7 +34,7 @@ export default function Hero() {
   return (
     <>
       <div className="relative">
-        <div className="flex flex-row snap-x snap-mandatory overflow-scroll w-full h-[55vh]">
+        <div className="flex flex-row snap-x snap-mandatory overflow-hidden w-full h-[55vh]">
           {images.map((image, index) => (
             <div
               key={index}
@@ -50,8 +50,8 @@ export default function Hero() {
             </div>
           ))}
         </div>
-        <button onClick={prevImage} className="absolute top-[95%] left-4 transform -translate-y-1/2"><ArrowLeftCircleIcon className="w-9 h-9" /></button>
-        <button onClick={nextImage} className="absolute top-[95%] right-4 transform -translate-y-1/2"><ArrowRightCircleIcon className="w-9 h-9" /></button>
+        <button onClick={prevImage} className="absolute top-[95%] left-4 transform -translate-y-1/2"><ArrowLeftCircleIcon className="w-9 h-9 hover:text-[#098C4C] ease-in-out duration-200" /></button>
+        <button onClick={nextImage} className="absolute top-[95%] right-4 transform -translate-y-1/2"><ArrowRightCircleIcon className="w-9 h-9 hover:text-[#098C4C] ease-in-out duration-200" /></button>
       </div>
     </>
   );
