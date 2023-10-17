@@ -1,6 +1,6 @@
 # Solemarket
 
-<span align="center">![Masterhead](public/images/carasoul/banner.jpg)</span>
+<span align="center">![Masterhead](public/images/carousel/banner.jpg)</span>
 
 <br />
 
