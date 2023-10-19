@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import supabase from '@/config/supabaseClient'
+import { GetSession, GetUserEmail, GetLogOut } from '@/components/GetSession'
 
 export default function Navbar() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -14,47 +16,47 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex justify-between items-center border-b border-black bg-white p-4 top-0 sticky">
-      <div className="flex items-center">
+    <nav className="flex flex-row justify-center gap-x-[36vw] items-center border-b border-black bg-white p-4 top-0 sticky z-10">
+      <div className='flex self-start items-center mr-auto'>
         <button onClick={handleToggleOffcanvas}>
-          <Bars3Icon className="h-6 w-6 text-gray-500" />
+          <Bars3Icon className="h-10 w-10 text-gray-500" />
         </button>
-        <div className="w-6 h-6 bg-white"></div>
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search"
-            className="border rounded-full py-1 px-3 pr-10 focus:outline-none focus:border-green-700"
-          />
-          <div className="absolute top-0 right-0 mt-2 mr-3">
-            <button><MagnifyingGlassIcon className="h-5 w-5 text-gray-800" /></button>
-          </div>
-        </div>
-      </div>
-      <div className="hidden md:flex space-x-20">
-        <Link href="/" passHref>
-          <span className="font-bold text-lg hover:text-[#098C4C]">Home</span>
-        </Link>
-        <Link href="/" passHref>
-          <span className="font-bold text-lg hover:text-[#098C4C]">Brands</span>
-        </Link>
-        <Link href="/" passHref>
-          <span className="font-bold text-lg hover:text-[#098C4C]">New Arrivals</span>
-        </Link>
-        <Link href="/catalog" passHref>
-          <span className="font-bold text-lg hover:text-[#098C4C] focus:text-[#098C4C]">All</span>
-        </Link>
-        <Link href="/" passHref>
-          <span className="font-bold text-lg hover:text-[#098C4C]">Trending</span>
-        </Link>
       </div>
 
-      <div className="hidden md:flex items-center space-x-4">
-        <button className="font-bold text-[#098C4C] py-2 px-4">Login</button>
-        <span className="font-bold text-gray-800">|</span>
-        <button className="font-bold text-black py-2 px-4">Register</button>
-        <button><ShoppingCartIcon className="h-6 w-6 text-black" /></button>
+      <div className="hidden md:flex flex-row justify-between self-center">
+        <div className='flex px-5'>
+          <Link href="/" passHref>
+            <span className="font-bold text-lg hover:text-[#098C4C] ease-in-out duration-200">Home</span>
+          </Link>
+        </div>
+        <div className='flex px-5'>
+          <Link href="/catalog" passHref>
+            <span className="font-bold text-lg hover:text-[#098C4C] focus:text-[#098C4C] ease-in-out duration-200">Catalogue</span>
+          </Link>
+        </div>
       </div>
+
+      {GetSession() ? (
+        <div className="flex self-end items-center ease-in-out duration-200">
+          <p className="text-[#098C4C] text-sm md:text-base hover:text-black py-2 px-4 ease-in-out duration-200">{GetUserEmail()}</p>
+          <span className="font-bold text-gray-800">|</span>
+          <Link href="/">
+            <button className="font-bold hover:text-[#098C4C] py-2 px-4 ease-in-out duration-200" onClick={() => GetLogOut()}>
+              Logout
+            </button>
+          </Link>
+          {/* <button><ShoppingCartIcon className="h-6 w-6 text-black hover:text-[#098C4C] ease-in-out duration-200" /></button> */}
+        </div>
+      ) : (
+        <div className="text-lg flex self-end items-center ease-in-out duration-200">
+          <Link href="/login">
+            <button className="font-bold hover:text-[#098C4C] py-2 px-4 ease-in-out duration-200">Login</button>
+          </Link>
+          <span className="font-bold text-gray-800">|</span>
+          <Link href="/register" className="font-bold hover:text-[#098C4C] py-2 px-4 ease-in-out duration-200">Register</Link>
+          {/* <button><ShoppingCartIcon className="h-6 w-6 text-black hover:text-[#098C4C] ease-in-out duration-200" /></button> */}
+        </div>
+      )}
 
       {showOffcanvas && (
         <div className="fixed inset-0 bg-gray-700 bg-opacity-50 z-50">
@@ -67,7 +69,7 @@ export default function Navbar() {
               </button>
             </div>
             <div className="py-4 px-8">
-              <p className="mt-4">
+              <div className="mt-4">
                 <Link href="/" passHref>
                   <span className="font-bold text-lg text-white hover:text-[#098C4C]">Home</span>
                 </Link>
@@ -76,40 +78,19 @@ export default function Navbar() {
                   <span className="font-bold text-lg text-white hover:text-[#098C4C]">Brands</span>
                 </Link>
                 <br />
+                <Link href="/" passHref>
+                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">New Arrivals</span>
+                </Link>
+                <br />
                 <Link href="/catalog" passHref>
-                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">All</span>
+                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">Catalogue</span>
                 </Link>
                 <br />
                 <Link href="/" passHref>
                   <span className="font-bold text-lg text-white hover:text-[#098C4C]">Trending</span>
                 </Link>
                 <br />
-                <Link href="/" passHref>
-                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">New Arrival</span>
-                </Link>
-                <br />
-                <Link href="/" passHref>
-                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">Coming soon</span>
-                </Link>
-                <br />
-                <Link href="/Selling" passHref>
-                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">Selling</span>
-                </Link>
-                <br />
-                <Link href="/Buying" passHref>
-                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">Buying</span>
-                </Link>
-              </p>
-            </div>
-
-            <div className="absolute bottom-0 left-0 w-full py-4 px-8 space-x-2">
-              <Link href="/Login" passHref>
-                <span className="font-bold text-lg text-white hover:text-[#098C4C]">Login</span>
-              </Link>
-              <span className="font-bold text-white">|</span>
-              <Link href="/Register" passHref>
-                <span className="font-bold text-lg text-white hover:text-[#098C4C]">Register</span>
-              </Link>
+              </div>
             </div>
           </div>
         </div>

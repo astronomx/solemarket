@@ -1,9 +1,10 @@
 import './globals.css'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 import type { Metadata } from 'next'
 import { Inter } from '@next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
   title: 'Solemarket',
@@ -18,11 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <head>
-        
+
       </head>
       <body>
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
