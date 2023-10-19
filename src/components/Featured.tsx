@@ -32,22 +32,22 @@ export default async function Featured() {
         <div className="flex justify-center">
             <div className="flex flex-col justify-center w-fit">
                 <h1 className="text-2xl text-[#098C4C] font-bold mb-4 ml-4">Featured</h1>
-                <div className="flex justify-center space-x-5">
-                {shoes.map((shoe) => (
-                    <Link href={`/catalog/${shoe.slug}`} key={shoe.id}>
-                        <div className="relative flex-col justify-center border-4 xl:border-2 p-4 rounded-md w-[180px] md:w-[230px] h-[250px] ease-in-out duration-300 hover:border-[#098C4C] hover:w-[240px] hover:h-[260px]">
-                          <div className="flex justify-center">
-                            <img src={shoe.imageURL} className="w-32 self-center h-auto" alt="picture" />
+                <div className="flex flex-wrap justify-center gap-3 w-full md:w-[900px] xl:w-full">
+                  {shoes.map((shoe) => (
+                      <Link href={`/catalog/${shoe.slug}`} key={shoe.id}>
+                          <div className="flex relative flex-col justify-center border-4 xl:border-2 p-4 rounded-md w-[180px] md:w-[230px] h-[250px] ease-in-out duration-300 hover:border-[#098C4C] hover:w-[240px] hover:h-[260px]">
+                            <div className="flex justify-center">
+                              <img src={shoe.imageURL} className="w-32 self-center h-auto" alt="picture" />
+                            </div>
+                              <div className="flex flex-col mt-2">
+                              <p className="font-bold text-sm md:text-lg">{shoe.name}</p>
+                              </div>
+                              <div className="absolute top-4 z-0">
+                              <p className="text-base md:text-xl text-[#098C4C]">€{shoe.price}</p>
+                              </div>
                           </div>
-                            <div className="flex flex-col mt-2">
-                            <p className="font-bold text-sm md:text-lg">{shoe.name}</p>
-                            </div>
-                            <div className="absolute top-4 z-0">
-                            <p className="text-base md:text-xl text-[#098C4C]">€{shoe.price}</p>
-                            </div>
-                        </div>
-                    </Link>
-                ))}
+                      </Link>
+                  ))}
                 </div>
             </div>
         </div>
