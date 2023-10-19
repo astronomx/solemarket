@@ -1,8 +1,10 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { ImFacebook2} from "react-icons/im";
+import { ImFacebook2 } from "react-icons/im";
 import { BsInstagram } from "react-icons/bs";
 import { FaXTwitter } from "react-icons/fa6";
+import Link from "next/link"
+import { GetSession, GetUserEmail, GetLogOut } from '@/components/GetSession'
 
 const Footer: React.FC = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -28,7 +30,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="text-black border-t border-black py-4 px-8">
+    <footer className="text-black border-t border-black py-4 px-8 mt-10">
       <div className="container mx-auto py-8">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {/* Sneakers */}
@@ -67,13 +69,25 @@ const Footer: React.FC = () => {
           </div>
 
           {/* My Account */}
-          <div className="md:col-span-1">
-            <h3 className="text-xl font-semibold mb-4">My Account</h3>
-            <ul>
-              <li><a href="/">Log in</a></li>
-              <li><a href="/">Register</a></li>
-            </ul>
-          </div>
+          {GetSession() ? (
+            <div className="md:col-span-1">
+              <h3 className="text-xl font-semibold mb-4">My Account</h3>
+              <ul>
+                <li><p className='text-[#098C4C] hover:text-black ease-in-out duration-200'>{GetUserEmail()}</p></li>
+                <button className="hover:text-[#098C4C] ease-in-out duration-200" onClick={() => GetLogOut()}>
+                  Logout
+                </button>
+              </ul>
+            </div>
+          ) : (
+            <div className="md:col-span-1">
+              <h3 className="text-xl font-semibold mb-4">My Account</h3>
+              <ul>
+                <li><Link href="/login">Log in</Link></li>
+                <li><Link href="/register">Register</Link></li>
+              </ul>
+            </div>
+          )}
 
           {/* Social icons */}
           <div className="md:col-span-1">
