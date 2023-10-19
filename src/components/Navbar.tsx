@@ -16,8 +16,8 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex flex-row justify-center gap-x-[36vw] items-center border-b border-black bg-white p-4 top-0 sticky z-10">
-      <div className='flex self-start items-center mr-auto'>
+    <nav className="flex justify-between items-center border-b border-black p-4 top-0 sticky z-10">
+      <div className='flex items-center'>
         <button onClick={handleToggleOffcanvas}>
           <Bars3Icon className="h-10 w-10 text-gray-500" />
         </button>
