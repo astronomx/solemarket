@@ -6,6 +6,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
 
 export default function ShoeCatalog() {
+  // Code van Amin begint hier
   const maxPages = 7; // Stel het maximale aantal pagina's in
   const [page, setPage] = useState<number>(0);
   const [shoes, setShoes] = useState<Array<{ id: number; name: string; price: number; imageURL: string; slug: string }>>([]);
@@ -38,7 +39,9 @@ export default function ShoeCatalog() {
       setPage(previousPage);
     }
   };
+  // Code van Amin eindigt hier
 
+  // Code van Quentin begint hier
   const getProducts = async (page: number): Promise<Array<{ id: number; name: string; price: number; imageURL: string; slug: string }>> => {
     const { from, to } = getFromAndTo(page);
     const { data, error } = await supabase
@@ -106,3 +109,4 @@ export default function ShoeCatalog() {
     </div>
   );
 }
+// Code van Quentin eindigt hier
