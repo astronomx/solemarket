@@ -16,7 +16,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex justify-between items-center border-b border-black p-4 top-0 sticky z-10">
+    <nav className="flex justify-between items-center border-b bg-white border-black p-4 top-0 sticky z-10">
       <div className='flex items-center'>
         <button onClick={handleToggleOffcanvas}>
           <Bars3Icon className="h-10 w-10 text-gray-500" />
@@ -31,7 +31,7 @@ export default function Navbar() {
         </div>
         <div className='flex px-5'>
           <Link href="/catalog" passHref>
-            <span className="font-bold text-lg hover:text-[#098C4C] focus:text-[#098C4C] ease-in-out duration-200">Catalogue</span>
+            <span className="font-bold text-lg hover:text-[#098C4C] focus:text-[#098C4C] ease-in-out duration-200">Catalog</span>
           </Link>
         </div>
       </div>
