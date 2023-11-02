@@ -31,7 +31,7 @@ export default function Navbar() {
         </div>
         <div className='flex px-5'>
           <Link href="/catalog" passHref>
-            <span className="font-bold text-lg hover:text-[#098C4C] focus:text-[#098C4C] ease-in-out duration-200">Catalog</span>
+            <span className="font-bold text-lg hover:text-[#098C4C] focus:text-[#098C4C] ease-in-out duration-200">Catalogue</span>
           </Link>
         </div>
       </div>
