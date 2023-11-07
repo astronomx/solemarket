@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation"; 
 import supabase from "@/config/supabaseClient";
 
 export default function GetUserReviews() {

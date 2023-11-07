@@ -156,7 +156,7 @@ export default function ShoeDetails() {
                 <tbody>
                   <tr className="text-[#098C4C] font-bold text-left">
                     <th>User Email</th>
-                    <th>Ratingl</th>
+                    <th>Rating</th>
                     <th>Review</th>
                   </tr>
                 <GetUserReviews/>
