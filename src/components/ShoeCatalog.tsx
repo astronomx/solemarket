@@ -4,21 +4,16 @@ import React, { useState, useEffect } from "react";
 import supabase from "@/config/supabaseClient";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
-
 export default function ShoeCatalog() {
   const maxPages = 7; // Stel het maximale aantal pagina's in
   const [page, setPage] = useState<number>(0);
   const [shoes, setShoes] = useState<Array<{ id: number; name: string; price: number; imageURL: string; slug: string }>>([]);
 
-  const ITEM_PER_PAGE: number = 8;
+  const ITEM_PER_PAGE: number = 8; // Aantal items per pagina
 
   const getFromAndTo = (page: number): { from: number; to: number } => {
-    let from: number = page * ITEM_PER_PAGE;
-    let to: number = from + ITEM_PER_PAGE;
-
-    if (page > 0) {
-      from += 1;
-    }
+    const from: number = page * ITEM_PER_PAGE;
+    const to: number = (page + 1) * ITEM_PER_PAGE;
 
     return { from, to };
   };
@@ -26,7 +21,7 @@ export default function ShoeCatalog() {
   const fetchData = async () => {
     const nextPage = page + 1;
     const newShoes = await getProducts(nextPage);
-    setShoes(newShoes); // Reset de 'shoes' staat met de nieuwe set
+    setShoes(newShoes); // Vervang de bestaande schoenen door de nieuwe set
     setPage(nextPage);
   };
 
@@ -34,7 +29,7 @@ export default function ShoeCatalog() {
     if (page > 0) {
       const previousPage = page - 1;
       const newShoes = await getProducts(previousPage);
-      setShoes(newShoes);
+      setShoes(newShoes); // Vervang de bestaande schoenen door de nieuwe set
       setPage(previousPage);
     }
   };
@@ -86,22 +81,20 @@ export default function ShoeCatalog() {
         ))}
       </div>
       <div className="flex justify-center my-4">
-
         <button
-          className="bg-[#098C4C] text-white p-2 rounded mx-2"
+          className={`p-2 rounded mx-2 ${page === 0 ? 'bg-gray-200 text-white' : 'bg-[#098C4C] text-white'}`}
           onClick={fetchPreviousPage}
           disabled={page === 0}
         >
           <ArrowLeftIcon className="h-6 w-6 text-white" />
         </button>
         <button
-          className="bg-[#098C4C] text-white p-2 rounded mx-2"
+          className={`p-2 rounded mx-2 ${page >= maxPages - 1 ? 'bg-gray-200 text-white' : 'bg-[#098C4C] text-white'}`}
           onClick={fetchData}
           disabled={page >= maxPages - 1}
         >
           <ArrowRightIcon className="h-6 w-6 text-white" />
         </button>
-
       </div>
     </div>
   );
