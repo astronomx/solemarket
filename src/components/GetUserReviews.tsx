@@ -19,7 +19,7 @@ export default function GetUserReviews() {
           setUserReviews(data);
         }
       } catch (error) {
-        console.error("Error fetching user reviews:", error);
+        console.error("Error fetching user re views:", error);
       }
     };
 
