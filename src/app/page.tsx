@@ -1,11 +1,15 @@
-import Navbar from '../components/Navbar';
-
-const Home = () => {
+import React from 'react';
+import Hero from '@/components/Hero';
+import Featured from '@/components/Featured';
+import Brands from '@/components/Brands';
+export default function Home() {
   return (
-    <div>
-      <Navbar />
-    </div>
-  );
-};
-
-export default Home;
+    <>
+      <div>
+        <Hero/>
+        <Featured/>
+        <Brands/>
+      </div>
+    </>
+  )
+}

@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Solemarket
 
-## Getting Started
+<span align="center">![Masterhead](public/images/carousel/banner.jpg)</span>
 
-First, run the development server:
+<br />
 
-```bash
+Solemarket is a sneaker website that's inspired by various resell websites like StockX, Goat and Restocks. The website is built with NextJs, Tailwind and Supabase. The website is hosted on Vervel and can be found [here](https://solemarket.vercel.app/). The website has a lot of simalarities of these websites but also has some unique features. The website is built for a school project and is not meant to be used in production. Down below you can find how to install the project and run it locally.
+
+<br />
+
+## Installation
+**Clone the repository**
+```
+git clone git@github.com:astronomx/solemarket.git
+```
+
+**Install the dependencies**
+```
+npm install
+```
+
+**Run the project**
+```
 npm run dev
-# or
+```
+
+or    
+```
 yarn dev
-# or
+```
+
+or
+```
 pnpm dev
-# or
+```
+
+or depending on your package manager
+```
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+After installing the dependencies and running the project you can go to [localhost:3000](http://localhost:3000/) to view the project.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
