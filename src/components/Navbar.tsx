@@ -1,12 +1,11 @@
 "use client";
 
-import Link from 'next/link';
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import React, { useState } from "react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
-import { ShoppingCartIcon } from "@heroicons/react/24/outline";
-import React, { useState, useEffect } from "react";
-import supabase from '@/config/supabaseClient'
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import Link from 'next/link';
 import { GetSession, GetUserEmail, GetLogOut } from '@/components/GetSession'
+import Searchbar from '@/components/Searchbar'
 
 export default function Navbar() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -17,19 +16,20 @@ export default function Navbar() {
 
   return (
     <nav className="flex justify-between items-center border-b bg-white border-black p-4 top-0 sticky z-10">
-      <div className='flex items-center'>
+      <div className="flex items-center">
         <button onClick={handleToggleOffcanvas}>
           <Bars3Icon className="h-10 w-10 text-gray-500" />
         </button>
+        <Searchbar/>
       </div>
 
       <div className="hidden md:flex flex-row justify-between self-center">
-        <div className='flex px-5'>
+        <div className="flex px-5">
           <Link href="/" passHref>
             <span className="font-bold text-lg hover:text-[#098C4C] ease-in-out duration-200">Home</span>
           </Link>
         </div>
-        <div className='flex px-5'>
+        <div className="flex px-5">
           <Link href="/catalog" passHref>
             <span className="font-bold text-lg hover:text-[#098C4C] focus:text-[#098C4C] ease-in-out duration-200">Catalog</span>
           </Link>
@@ -79,7 +79,7 @@ export default function Navbar() {
                 </Link>
                 <br />
                 <Link href="/" passHref>
-                  <span className="font-bold text-lg text-white hover:text-[#098C4C]">New Arrivals</span>
+                  <span className="font-bold text-lg text-white hover.text-[#098C4C]">New Arrivals</span>
                 </Link>
                 <br />
                 <Link href="/catalog" passHref>
