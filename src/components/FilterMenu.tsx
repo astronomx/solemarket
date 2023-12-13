@@ -3,7 +3,11 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import supabase from "@/config/supabaseClient";
 
-export default function FilterMenu() {
+export interface FilterMenuProps {
+  onFilterChange: (filteredProducts: any[]) => void;
+}
+
+const FilterMenu: React.FC<FilterMenuProps> = ({ onFilterChange }) => {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [products, setProducts] = useState<any[]>([]);
 
@@ -23,6 +27,7 @@ export default function FilterMenu() {
     );
 
     setProducts(filteredProducts);
+    onFilterChange(filteredProducts); 
   }
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,3 +106,5 @@ export default function FilterMenu() {
     </>
   );
 }
+
+export default FilterMenu; 

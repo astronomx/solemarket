@@ -4,7 +4,11 @@ import React, { useState, useEffect } from "react";
 import supabase from "@/config/supabaseClient";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
-export default function ShoeCatalog() {
+export interface ShoeCatalogProps {
+  filteredProducts: any[]; // Add this prop for filtered products
+}
+
+const ShoeCatalog: React.FC<ShoeCatalogProps> = ({ filteredProducts }) => {
   const maxPages = 7; // Stel het maximale aantal pagina's in
   const [page, setPage] = useState<number>(0);
   const [shoes, setShoes] = useState<Array<{ id: number; name: string; price: number; imageURL: string; slug: string }>>([]);
@@ -51,7 +55,7 @@ export default function ShoeCatalog() {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const initialShoes = await getProducts(page);
+        const initialShoes = filteredProducts.length > 0 ? filteredProducts : await getProducts(page);
         setShoes(initialShoes);
       } catch (error) {
         console.error("Error fetching initial products:", error);
@@ -59,7 +63,7 @@ export default function ShoeCatalog() {
     };
 
     fetchInitialData();
-  }, []); // Lege afhankelijkheidsarray om ervoor te zorgen dat dit slechts één keer wordt uitgevoerd
+  }, [filteredProducts, page]); // Lege afhankelijkheidsarray om ervoor te zorgen dat dit slechts één keer wordt uitgevoerd
 
   return (
     <div className="relative">
@@ -99,3 +103,5 @@ export default function ShoeCatalog() {
     </div>
   );
 }
+
+export default ShoeCatalog;
