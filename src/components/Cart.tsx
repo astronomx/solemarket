@@ -1,5 +1,7 @@
 // Cart.tsx
 
+"use client";
+
 import React from "react";
 
 interface CartProps {
@@ -24,3 +26,4 @@ const Cart: React.FC<CartProps> = ({ cartItems }) => {
 };
 
 export default Cart;
+
