@@ -55,7 +55,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({ onFilterChange }) => {
     <>
       <div className="flex flex-col">
         {/* Brands Filter */}
-        <div className="flex flex-row m-5 md:text-lg space-x-4">
+        <div className="flex flex-col m-5 md:text-lg">
           <label>Brands:</label>
           <div>
             {/* Map over your dynamic list of brands */}
@@ -74,7 +74,7 @@ const FilterMenu: React.FC<FilterMenuProps> = ({ onFilterChange }) => {
         </div>
 
         {/* Genders Filter */}
-        <div className="flex flex-row m-5 md:text-lg space-x-4">
+        <div className="flex flex-col m-5 md:text-lg">
           <label>Genders:</label>
           <div>
             {/* Map over your dynamic list of genders */}

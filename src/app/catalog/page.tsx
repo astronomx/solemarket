@@ -16,7 +16,7 @@ export default function Catalog() {
   return(
     <>
       <div className="flex justify-center mt-10">
-        <div className="flex flex-col">
+        <div className="flex flex-row">
           <FilterMenu onFilterChange={handleFilterChange} />
           <ShoeCatalog filteredProducts={filteredProducts} />
         </div>
