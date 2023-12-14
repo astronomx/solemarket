@@ -7,7 +7,6 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Link from 'next/link';
 import { GetSession, GetUserEmail, GetLogOut } from '@/components/GetSession'
 import Searchbar from '@/components/Searchbar'
-import Cart from "./Cart";
 
 export default function Navbar() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -15,8 +14,6 @@ export default function Navbar() {
   const handleToggleOffcanvas = () => {
     setShowOffcanvas(!showOffcanvas);
   };
-
-  const [cart, setCart] = useState<any[]>([]); // Add cart state
 
   return (
     <nav className="flex justify-between items-center border-b bg-white border-black p-4 top-0 sticky z-10">
