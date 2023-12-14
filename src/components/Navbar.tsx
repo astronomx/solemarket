@@ -6,6 +6,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Link from 'next/link';
 import { GetSession, GetUserEmail, GetLogOut } from '@/components/GetSession'
 import Searchbar from '@/components/Searchbar'
+import Cart from "./Cart";
 
 export default function Navbar() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -13,6 +14,8 @@ export default function Navbar() {
   const handleToggleOffcanvas = () => {
     setShowOffcanvas(!showOffcanvas);
   };
+
+  const [cart, setCart] = useState<any[]>([]); // Add cart state
 
   return (
     <nav className="flex justify-between items-center border-b bg-white border-black p-4 top-0 sticky z-10">
@@ -45,7 +48,7 @@ export default function Navbar() {
               Logout
             </button>
           </Link>
-          {/* <button><ShoppingCartIcon className="h-6 w-6 text-black hover:text-[#098C4C] ease-in-out duration-200" /></button> */}
+          <Cart cartItems={cart} /> {/* Display the cart component */}
         </div>
       ) : (
         <div className="text-lg flex self-end items-center ease-in-out duration-200">
@@ -54,7 +57,7 @@ export default function Navbar() {
           </Link>
           <span className="font-bold text-gray-800">|</span>
           <Link href="/register" className="font-bold hover:text-[#098C4C] py-2 px-4 ease-in-out duration-200">Register</Link>
-          {/* <button><ShoppingCartIcon className="h-6 w-6 text-black hover:text-[#098C4C] ease-in-out duration-200" /></button> */}
+          <Cart cartItems={cart} /> {/* Display the cart component */}
         </div>
       )}
 
