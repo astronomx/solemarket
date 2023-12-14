@@ -20,6 +20,7 @@ export default function ShoeDetails() {
   const [sizes, setSizes] = useState<any>([]);
   const [availableSizes, setAvailableSizes] = useState<any>([]);
   const [cart, setCart] = useLocalStorage<{ shoeData: any }[]>("cart", []);
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
 
   // Met de useEffect hook gaan we de data ophalen van de shoe die we willen laten zien. Dit doen we door de slug te gebruiken die we hebben meegegeven in de url.
   useEffect(() => {
@@ -52,26 +53,17 @@ export default function ShoeDetails() {
     getShoeDetails();
     generateShoeSizes();
 
-    // Hier zorgen we ervoor dat de body niet kan scrollen als de component mount.
-    document.body.style.overflow = 'hidden';
-
-    // Effect gaat weg als de component unmount
-    return () => {
-      document.body.style.overflow = '';
-    };
-
     // We voegen de slug en router toe aan de dependency array zodat de useEffect hook opnieuw wordt uitgevoerd als de slug of router veranderd.
   }, [slug, router]);
 
-  useEffect(() => {
-    if (cart === null) {
-      let existingCart = localStorage.getItem('cart');
-      if (existingCart !== null) {
-        let cartData = JSON.parse(existingCart);
-        setCart(cartData);
-      }
-    }
-  }, [cart]);
+  const updateCart = () => {
+    setCart([...cart, shoeData]);
+    setIsAddedToCart(true);
+
+    setTimeout(() => {
+      setIsAddedToCart(false);
+    }, 3000);
+  };
 
   // Deze functie genereert de schoenmaten die beschikbaar zijn voor de schoen.
   function generateShoeSizes(): void {
@@ -110,13 +102,18 @@ export default function ShoeDetails() {
 
                 <div className="flex flex-col justify-center items-center">
                   <div>
-                    <button className="bg-[#098C4C] text-xl text-white px-36 py-5 mb-5 rounded-sm" onClick={() => setCart([...cart, shoeData])
-                    }>{`Add to cart`}</button>
+                    <button
+                      className={`text-xl px-36 py-5 mb-5 rounded-sm duration-300 ease-in-out ${isAddedToCart ? 'w-full bg-neutral-300 text-black' : 'w-full bg-[#098C4C] hover:bg-[#246948] text-white'
+                        }`}
+                      onClick={updateCart}
+                    >
+                      {isAddedToCart ? 'Added to cart!' : 'Add to cart'}
+                    </button>
                   </div>
 
                   <div>
                     <div className="flex justify-center w-[25vw] border-b-[1.5px] border-gray-500/20">
-                      <h1>Available sizes:</h1>
+                      <h1>Available sizes</h1>
                     </div>
                     <div className="flex justify-center">
                       <div className="flex flex-wrap gap-5 w-[25vw] mt-5 ml-6">

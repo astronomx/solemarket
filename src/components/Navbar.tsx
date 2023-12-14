@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Link from 'next/link';
 import { GetSession, GetUserEmail, GetLogOut } from '@/components/GetSession'
@@ -20,7 +21,7 @@ export default function Navbar() {
         <button onClick={handleToggleOffcanvas}>
           <Bars3Icon className="h-10 w-10 text-gray-500" />
         </button>
-        <Searchbar/>
+        <Searchbar />
       </div>
 
       <div className="hidden md:flex flex-row justify-between self-center">
@@ -45,16 +46,21 @@ export default function Navbar() {
               Logout
             </button>
           </Link>
-          {/* <button><ShoppingCartIcon className="h-6 w-6 text-black hover:text-[#098C4C] ease-in-out duration-200" /></button> */}
+          <div className='flex items-center'>
+            <div className="inline-block h-10 min-h-[1em] w-0.5 self-stretch bg-neutral-500 opacity-100 dark:opacity-50"></div>
+          </div>
+          <Link href='/cart'><button><ShoppingBagIcon className="ml-4 h-6 w-6 text-black hover:text-[#098C4C] ease-in-out duration-200" /></button></Link>
         </div>
       ) : (
         <div className="text-lg flex self-end items-center ease-in-out duration-200">
           <Link href="/login">
             <button className="font-bold hover:text-[#098C4C] py-2 px-4 ease-in-out duration-200">Login</button>
           </Link>
-          <span className="font-bold text-gray-800">|</span>
           <Link href="/register" className="font-bold hover:text-[#098C4C] py-2 px-4 ease-in-out duration-200">Register</Link>
-          {/* <button><ShoppingCartIcon className="h-6 w-6 text-black hover:text-[#098C4C] ease-in-out duration-200" /></button> */}
+          <div className='flex flex-row items-center'>
+            <div className="inline-block h-10 min-h-[1em] w-0.5 self-stretch bg-neutral-500 opacity-100 dark:opacity-50"></div>
+          </div>
+          <Link href='/cart'><button><ShoppingBagIcon className="ml-4 h-6 w-6 text-black hover:text-[#098C4C] ease-in-out duration-200" /></button></Link>
         </div>
       )}
 
