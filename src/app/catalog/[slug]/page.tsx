@@ -1,3 +1,5 @@
+// Import statements (use client, React, etc.)
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -9,24 +11,24 @@ import supabase from "@/config/supabaseClient";
 
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation"; // Change import statement to use "next/router"
+
+import supabase from "@/config/supabaseClient";
+import Cart from "@/components/Cart"; // Import the Cart component
 
 export default function ShoeDetails() {
   const { slug } = useParams();
   const router = useRouter();
 
-  // Hier maken we een state aan voor de shoeData. Deze state is een object met de volgende properties: name, price, imageURL, slug. De type is <any>
-  // omdat we nog niet weten wat voor data we terug krijgen van de supabase query.
   const [shoeData, setShoeData] = useState<any>({});
   const [sizes, setSizes] = useState<any>([]);
   const [availableSizes, setAvailableSizes] = useState<any>([]);
   const [cart, setCart] = useLocalStorage<{ shoeData: any }[]>("cart", []);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
 
-  // Met de useEffect hook gaan we de data ophalen van de shoe die we willen laten zien. Dit doen we door de slug te gebruiken die we hebben meegegeven in de url.
   useEffect(() => {
     const getShoeDetails = async () => {
-      // Met de .eq() functie kunnen we een waarde meegeven die we willen gebruiken om te filteren. In dit geval gebruiken we de slug om de juiste shoe op te halen.
-      // De .single() functie zorgt ervoor dat we maar 1 resultaat terug krijgen. Als we dit niet doen krijgen we een array terug met 1 object.
       try {
         const { data, error } = await supabase
           .from("shoes")
@@ -34,14 +36,12 @@ export default function ShoeDetails() {
           .eq("slug", slug)
           .single();
 
-        // Als er een error is dan sturen we de gebruiker naar de 404 pagina.
         if (error) {
           router.push("/404");
           return;
         }
 
         if (data) {
-          // Als er geen error is dan zetten we de data in de shoeData state.
           const { name, brand, gender, category, price, items_left, imageURL, slug } = data;
           setShoeData({ name, brand, gender, category, price, items_left, imageURL, slug });
         }
@@ -53,7 +53,6 @@ export default function ShoeDetails() {
     getShoeDetails();
     generateShoeSizes();
 
-    // We voegen de slug en router toe aan de dependency array zodat de useEffect hook opnieuw wordt uitgevoerd als de slug of router veranderd.
   }, [slug, router]);
 
   const updateCart = () => {
@@ -72,17 +71,18 @@ export default function ShoeDetails() {
       allSizes.push(size);
     }
 
-    // Randomized de schoenmaten
     const randomlyAvailableSizes = allSizes.filter(() => Math.random() < 0.5);
 
-    // Update de state
     setAvailableSizes(randomlyAvailableSizes);
     setSizes(allSizes);
   }
 
+  const addToCart = () => {
+    setCart([...cart, shoeData]);
+  };
+
   return (
     <div className="h-screen">
-      {/* Hier renderen we de data van de shoeData state. Als de shoeData state leeg is dan laten we een loading icoon zien. */}
       {shoeData.name ? (
         <>
           <div className="flex justify-center items-center mt-10">
@@ -117,7 +117,6 @@ export default function ShoeDetails() {
                     </div>
                     <div className="flex justify-center">
                       <div className="flex flex-wrap gap-5 w-[25vw] mt-5 ml-6">
-                        {/* Hier mappen we over de schoeninfo heen en daarin checken we welke maten er beschikbaar zijn en welke niet */}
                         {sizes.map((size: number) => {
                           const isAvailable = availableSizes.includes(size);
                           return (
@@ -177,6 +176,15 @@ export default function ShoeDetails() {
                 </tbody>
               </table>
             </div>
+          </div>
+          <div className="flex justify-center items-center mt-5">
+            <button
+              onClick={addToCart}
+              className="bg-[#098C4C] text-xl text-white px-36 py-5 rounded-sm"
+            >
+              Add to Cart
+            </button>
+            <Cart cartItems={cart} /> {/* Display the cart component */}
           </div>
         </>
       ) : (
