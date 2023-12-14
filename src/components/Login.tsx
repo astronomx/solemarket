@@ -51,8 +51,8 @@ export default function Login({ setToken }: LoginProps) {
         <div className='flex flex-col justify-center w-full items-center mt-2'>
             <form onSubmit={handleSubmit} className='flex flex-col p-5 w-2/4'>
             <h1 className='font-bold text-3xl self-start m-2'>Login</h1>
-                <input type="email" placeholder="Email" name="email" onChange={handleChange} className='bg-gray-200 ease-in-out duration-200 p-2 m-2 hover:border-[#098C4C] active:border-[#098C4C] border-2 rounded-lg' />
-                <input type="password" placeholder="Password" name="password" onChange={handleChange} className='bg-gray-200 ease-in-out duration-200 p-2 m-2 hover:border-[#098C4C] active:border-[#098C4C] border-2 rounded-lg' />
+                <input type="email" placeholder="Email" name="email" onChange={handleChange} className='bg-gray-200 ease-in-out duration-200 p-2 m-2 hover:border-[#098C4C] active:border-[#098C4C] border-2 rounded-lg' required />
+                <input type="password" minLength={8} placeholder="Password" name="password" onChange={handleChange} className='bg-gray-200 ease-in-out duration-200 p-2 m-2 hover:border-[#098C4C] active:border-[#098C4C] border-2 rounded-lg' required />
                 <Link href="/reset-password" className="text-sm p-2 text-[#098C4C] ease-in-out duration-200 hover:underline">Forgot password?</Link>
                 <button type="submit" className='bg-[#098C4C] hover:bg-[#47ad7c] ease-in-out duration-200 p-2 m-2 rounded-sm text-gray-200'>Login</button>
             </form>
