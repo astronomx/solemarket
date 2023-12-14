@@ -1,19 +1,23 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import supabase from "@/config/supabaseClient";
+
 
 export interface FilterMenuProps {
   onFilterChange: (filteredProducts: any[]) => void;
 }
 
 const FilterMenu: React.FC<FilterMenuProps> = ({ onFilterChange }) => {
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: string[] }>({
+    brands: [],
+    genders: [],
+  });
+
   const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
     getFilteredProducts();
-  }, [selectedBrands]);
+  }, [selectedFilters]);
 
   async function getFilteredProducts() {
     const { data, error } = await supabase.from("shoes").select("*");
@@ -23,58 +27,73 @@ const FilterMenu: React.FC<FilterMenuProps> = ({ onFilterChange }) => {
     }
 
     const filteredProducts = data.filter((product: any) =>
-      selectedBrands.includes(product.brand)
+      (selectedFilters.brands.length === 0 || selectedFilters.brands.includes(product.brand)) &&
+      (selectedFilters.genders.length === 0 || selectedFilters.genders.includes(product.gender))
     );
 
     setProducts(filteredProducts);
-    onFilterChange(filteredProducts); 
+    onFilterChange(filteredProducts);
   }
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      setSelectedBrands([...selectedBrands, event.target.value]);
-    } else {
-      setSelectedBrands(
-        selectedBrands.filter((brand) => brand !== event.target.value)
-      );
-    }
+  const handleCheckboxChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    filterType: string
+  ) => {
+    const value = event.target.value;
+    setSelectedFilters((prevFilters) => {
+      const updatedFilters = { ...prevFilters };
+      if (event.target.checked) {
+        updatedFilters[filterType] = [...prevFilters[filterType], value];
+      } else {
+        updatedFilters[filterType] = prevFilters[filterType].filter((filter) => filter !== value);
+      }
+      return updatedFilters;
+    });
   };
 
   return (
     <>
-      <div className="flex flex-row m-5 md:text-lg">
-        <div className="flex flex-row items-center space-x-2">
-          <input
-            type="checkbox"
-            name="nike"
-            value={"NIKE"}
-            onChange={handleCheckboxChange}
-          />
-          <label htmlFor="nike">Nike</label>
+      <div className="flex flex-col">
+        {/* Brands Filter */}
+        <div className="flex flex-row m-5 md:text-lg space-x-4">
+          <label>Brands:</label>
+          <div>
+            {/* Map over your dynamic list of brands */}
+            {["NIKE", "ADIDAS", "JORDAN", "NEW BALANCE"].map((brand) => (
+              <div key={brand} className="flex flex-row items-center space-x-2">
+                <input
+                  type="checkbox"
+                  name={brand.toLowerCase()}
+                  value={brand}
+                  onChange={(e) => handleCheckboxChange(e, "brands")}
+                />
+                <label htmlFor={brand.toLowerCase()}>{brand}</label>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="flex flex-row items-center space-x-2 mx-4">
-          <input
-            type="checkbox"
-            name="adidas"
-            value={"ADIDAS"}
-            onChange={handleCheckboxChange}
-          />
-          <label htmlFor="adidas">Adidas</label>
-        </div>
-
-        <div className="flex flex-row items-center space-x-2">
-          <input
-            type="checkbox"
-            name="jordan"
-            value={"JORDAN"}
-            onChange={handleCheckboxChange}
-          />
-          <label htmlFor="jordan">Jordan</label>
+        {/* Genders Filter */}
+        <div className="flex flex-row m-5 md:text-lg space-x-4">
+          <label>Genders:</label>
+          <div>
+            {/* Map over your dynamic list of genders */}
+            {["MEN", "WOMEN", "KIDS"].map((gender) => (
+              <div key={gender} className="flex flex-row items-center space-x-2">
+                <input
+                  type="checkbox"
+                  name={gender.toLowerCase()}
+                  value={gender}
+                  onChange={(e) => handleCheckboxChange(e, "genders")}
+                />
+                <label htmlFor={gender.toLowerCase()}>{gender}</label>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
   );
-}
+};
 
-export default FilterMenu; 
+export default FilterMenu;

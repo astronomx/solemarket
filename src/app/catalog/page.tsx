@@ -11,6 +11,7 @@ export default function Catalog() {
   const handleFilterChange = (filteredProducts: any[]) => {
     setFilteredProducts(filteredProducts);
   };
+  
 
   return(
     <>
