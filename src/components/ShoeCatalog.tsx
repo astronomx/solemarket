@@ -63,7 +63,7 @@ const ShoeCatalog: React.FC<ShoeCatalogProps> = ({ filteredProducts }) => {
     };
 
     fetchInitialData();
-  }, [filteredProducts, page]); // Lege afhankelijkheidsarray om ervoor te zorgen dat dit slechts één keer wordt uitgevoerd
+  }, [filteredProducts, page]);
 
   return (
     <div className="relative">
