@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { useLocalStorage } from "@/app/hooks/useLocalStorage";
 
 // dit is een supabase client die we hebben aangemaakt in de config folder. zodat we de supabase functies kunnen gebruiken.
 import supabase from "@/config/supabaseClient";
@@ -18,6 +19,8 @@ export default function ShoeDetails() {
   const [shoeData, setShoeData] = useState<any>({});
   const [sizes, setSizes] = useState<any>([]);
   const [availableSizes, setAvailableSizes] = useState<any>([]);
+  const [cart, setCart] = useLocalStorage<{ shoeData: any }[]>("cart", []);
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
 
   // Met de useEffect hook gaan we de data ophalen van de shoe die we willen laten zien. Dit doen we door de slug te gebruiken die we hebben meegegeven in de url.
   useEffect(() => {
@@ -50,16 +53,17 @@ export default function ShoeDetails() {
     getShoeDetails();
     generateShoeSizes();
 
-    // Hier zorgen we ervoor dat de body niet kan scrollen als de component mount.
-    document.body.style.overflow = 'hidden';
-
-    // Effect gaat weg als de component unmount
-    return () => {
-      document.body.style.overflow = '';
-    };
-
     // We voegen de slug en router toe aan de dependency array zodat de useEffect hook opnieuw wordt uitgevoerd als de slug of router veranderd.
   }, [slug, router]);
+
+  const updateCart = () => {
+    setCart([...cart, shoeData]);
+    setIsAddedToCart(true);
+
+    setTimeout(() => {
+      setIsAddedToCart(false);
+    }, 3000);
+  };
 
   // Deze functie genereert de schoenmaten die beschikbaar zijn voor de schoen.
   function generateShoeSizes(): void {
@@ -98,12 +102,18 @@ export default function ShoeDetails() {
 
                 <div className="flex flex-col justify-center items-center">
                   <div>
-                    <button className="bg-[#098C4C] text-xl text-white px-36 py-5 mb-5 rounded-sm">{`Buy for €${shoeData.price}`}</button>
+                    <button
+                      className={`text-xl px-36 py-5 mb-5 rounded-sm duration-300 ease-in-out ${isAddedToCart ? 'w-full bg-neutral-300 text-black' : 'w-full bg-[#098C4C] hover:bg-[#246948] text-white'
+                        }`}
+                      onClick={updateCart}
+                    >
+                      {isAddedToCart ? 'Added to cart!' : 'Add to cart'}
+                    </button>
                   </div>
 
                   <div>
                     <div className="flex justify-center w-[25vw] border-b-[1.5px] border-gray-500/20">
-                      <h1>Available in:</h1>
+                      <h1>Available sizes</h1>
                     </div>
                     <div className="flex justify-center">
                       <div className="flex flex-wrap gap-5 w-[25vw] mt-5 ml-6">
@@ -148,20 +158,20 @@ export default function ShoeDetails() {
                 <tbody>
                   <tr className="text-[#098C4C] font-bold text-left">
                     <th>Name</th>
+                    <th>Price</th>
                     <th>Items left</th>
                     <th>Brand</th>
                     <th>Gender</th>
                     <th>Category</th>
-                    <th>Price</th>
                     <th>Slug</th>
                   </tr>
                   <tr>
                     <td>{shoeData.name}</td>
+                    <td>€{shoeData.price}</td>
                     <td>{shoeData.items_left}</td>
                     <td>{shoeData.brand}</td>
                     <td>{shoeData.gender}</td>
                     <td>{shoeData.category}</td>
-                    <td>{shoeData.price}</td>
                     <td>{shoeData.slug}</td>
                   </tr>
                 </tbody>
