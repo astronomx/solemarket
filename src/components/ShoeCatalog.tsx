@@ -40,28 +40,31 @@ const ShoeCatalog: React.FC<ShoeCatalogProps> = ({ filteredProducts }) => {
 
   const getProducts = async (page: number): Promise<Array<{ id: number; name: string; price: number; imageURL: string; slug: string }>> => {
     const { from, to } = getFromAndTo(page);
-    const { data, error } = await supabase
-      .from("shoes")
-      .select("id, name, price, imageURL, slug")
-      .range(from, to);
-
+  
+    // Check if filters are applied, and adjust the query accordingly
+    const query = filteredProducts.length > 0
+      ? supabase.from("shoes").select("id, name, price, imageURL, slug").in('id', filteredProducts.map(product => product.id)).range(from, to)
+      : supabase.from("shoes").select("id, name, price, imageURL, slug").range(from, to);
+  
+    const { data, error } = await query;
+  
     if (error) {
       console.error("Error fetching products:", error);
     }
-
+  
     return data || [];
   };
 
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const initialShoes = filteredProducts.length > 0 ? filteredProducts : await getProducts(page);
+        const initialShoes = await getProducts(page); // Fetch without filters when no filters are selected
         setShoes(initialShoes);
       } catch (error) {
         console.error("Error fetching initial products:", error);
       }
     };
-
+  
     fetchInitialData();
   }, [filteredProducts, page]);
 
