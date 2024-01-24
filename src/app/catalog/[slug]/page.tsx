@@ -4,29 +4,30 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useLocalStorage } from "@/app/hooks/useLocalStorage";
 
-// dit is een supabase client die we hebben aangemaakt in de config folder. zodat we de supabase functies kunnen gebruiken.
 import supabase from "@/config/supabaseClient";
 
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import GetUserReviews from "@/components/GetUserReviews";
 
 export default function ShoeDetails() {
   const { slug } = useParams();
   const router = useRouter();
 
-  // Hier maken we een state aan voor de shoeData. Deze state is een object met de volgende properties: name, price, imageURL, slug. De type is <any>
-  // omdat we nog niet weten wat voor data we terug krijgen van de supabase query.
   const [shoeData, setShoeData] = useState<any>({});
   const [sizes, setSizes] = useState<any>([]);
   const [availableSizes, setAvailableSizes] = useState<any>([]);
   const [cart, setCart] = useLocalStorage<{ shoeData: any }[]>("cart", []);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
+  const [userReview, setUserReview] = useState({
+    naam: "",
+    rating: 0,
+    review: "",
+    title: "",
+  });
 
-  // Met de useEffect hook gaan we de data ophalen van de shoe die we willen laten zien. Dit doen we door de slug te gebruiken die we hebben meegegeven in de url.
   useEffect(() => {
     const getShoeDetails = async () => {
-      // Met de .eq() functie kunnen we een waarde meegeven die we willen gebruiken om te filteren. In dit geval gebruiken we de slug om de juiste shoe op te halen.
-      // De .single() functie zorgt ervoor dat we maar 1 resultaat terug krijgen. Als we dit niet doen krijgen we een array terug met 1 object.
       try {
         const { data, error } = await supabase
           .from("shoes")
@@ -34,16 +35,15 @@ export default function ShoeDetails() {
           .eq("slug", slug)
           .single();
 
-        // Als er een error is dan sturen we de gebruiker naar de 404 pagina.
         if (error) {
           router.push("/404");
           return;
         }
 
         if (data) {
-          // Als er geen error is dan zetten we de data in de shoeData state.
-          const { name, brand, gender, category, price, items_left, imageURL, slug } = data;
-          setShoeData({ name, brand, gender, category, price, items_left, imageURL, slug });
+          const { name, brand, gender, category, price, items_left, imageURL, slug, id } = data;
+          setShoeData({ name, brand, gender, category, price, items_left, imageURL, slug, id });
+          console.log("shoeData:", shoeData);
         }
       } catch (error) {
         console.error("Error fetching shoe details:", error);
@@ -52,8 +52,6 @@ export default function ShoeDetails() {
 
     getShoeDetails();
     generateShoeSizes();
-
-    // We voegen de slug en router toe aan de dependency array zodat de useEffect hook opnieuw wordt uitgevoerd als de slug of router veranderd.
   }, [slug, router]);
 
   const updateCart = () => {
@@ -65,20 +63,57 @@ export default function ShoeDetails() {
     }, 3000);
   };
 
-  // Deze functie genereert de schoenmaten die beschikbaar zijn voor de schoen.
   function generateShoeSizes(): void {
     const allSizes: number[] = [];
     for (let size = 3.5; size <= 18; size += 0.5) {
       allSizes.push(size);
     }
 
-    // Randomized de schoenmaten
     const randomlyAvailableSizes = allSizes.filter(() => Math.random() < 0.5);
 
-    // Update de state
     setAvailableSizes(randomlyAvailableSizes);
     setSizes(allSizes);
   }
+
+  const handleReviewChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setUserReview((prevReview) => ({
+      ...prevReview,
+      [name]: value,
+    }));
+  };
+
+  const submitReview = async () => {
+    console.log("shoeData.id:", shoeData.id);
+    try {
+      const { data, error }: { data: any, error: any } = await supabase
+        .from("user-reviews")
+        .insert([
+          {
+            shoe_id: shoeData.id,
+            naam: userReview.naam,
+            rating: userReview.rating,
+            review: userReview.review,
+            titel: userReview.title,
+          },
+        ]);
+
+      console.log("Insert Data:", data);
+      console.log("Insert Error:", error);
+
+      if (error) {
+        console.error("Error submitting review:", error);
+        alert(`Error submitting review: ${error.message}`);
+      } else {
+        console.log("Review submitted successfully!");
+        alert("Review submitted successfully!");
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      alert(`Error submitting review: ${(error as any).message}`);
+    }
+  };
+
 
   return (
     <div className="h-screen">
@@ -124,7 +159,7 @@ export default function ShoeDetails() {
                             <div key={size}>
                               <div>
                                 {isAvailable ? (
-                                  <button className="text-lg w-14 h-14 rounded-lg ease-in-out duration-300 hover:border-[#098C4C] focus:border-[#098C4C] focus:text-[#098C4C] border-2 border-gray-500/20">
+                                  <button className="text-lg w-14 h-14 rounded-lg ease-in-out duration-300 hover:border-[#098C4C] border-2 border-gray-500/20">
                                     {size}
                                   </button>
                                 ) : (
@@ -176,15 +211,95 @@ export default function ShoeDetails() {
                   </tr>
                 </tbody>
               </table>
+              <div className="flex justify-between">
+              <h1 className="text-2xl mt-3">Reviews</h1>
             </div>
+
+            <table className="w-full">
+              <tbody>
+                <tr className="text-[#098C4C] font-bold text-left">
+                  <th>Naam</th>
+                  <th>Rating</th>
+                  <th>Review</th>
+                  <th>Titel</th>
+                </tr>
+                <GetUserReviews shoeId={shoeData.id} />
+              </tbody>
+            </table>
+            <h1 className="text-2xl mt-3">Add Your Review</h1>
+        <div className="flex space-x-8">
+        <div>
+        <h1>Title of your review</h1>
+            <input
+              type="text"
+              name="title"
+              placeholder="Title"
+              value={userReview.title}
+              onChange={handleReviewChange}
+              className="px-4 py-2 border border-gray-300 rounded-md"
+            />
           </div>
-        </>
-      ) : (
-        <div className="flex justify-center items-center space-x-5">
-          <div className="text-3xl text-bold">Loading</div>
-          <ArrowPathIcon className="animate-spin h-9 w-9" />
+          <div>
+        <h1>Your name</h1>
+            <input
+              type="text"
+              name="naam"
+              placeholder="Name"
+              value={userReview.naam}
+              onChange={handleReviewChange}
+              className="px-4 py-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          <div>
+        <h1>Rating</h1>
+            <input
+              type="number"
+              name="rating"
+              placeholder="Rating (1-5)"
+              value={userReview.rating}
+              // onChange={handleReviewChange}
+              onInput={(e) => {
+                const inputValue = parseInt(e.currentTarget.value, 10);
+                const min = 1;
+                const max = 5;
+                const clampedValue = Math.min(max, Math.max(min, inputValue));
+                setUserReview((prevReview) => ({
+                  ...prevReview,
+                  rating: clampedValue,
+                }));
+              }}
+              className="px-4 py-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          <div>
+        <h1>Your review</h1>
+        <input
+          type="text"
+          name="review"
+          placeholder="Review (max 100 words)"
+          value={userReview.review}
+          onChange={handleReviewChange}
+          maxLength={100}
+          className="px-4 py-2 border border-gray-300 rounded-md"
+        />
+          </div>
+          <button
+            type="button"
+            onClick={submitReview}
+            className="bg-[#098C4C] text-white px-4 py-2 rounded-md hover:bg-[#246948]"
+          >
+            Submit Review
+          </button>
+          </div>
+          </div>
         </div>
-      )}
-    </div>
-  );
-}
+      </>
+    ) : (
+      <div className="flex justify-center items-center space-x-5">
+        <div className="text-3xl text-bold">Loading</div>
+        <ArrowPathIcon className="animate-spin h-9 w-9" />
+      </div>
+    )}
+  </div>
+);
+    }
