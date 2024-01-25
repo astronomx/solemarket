@@ -1,19 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useLocalStorage } from "@/app/hooks/useLocalStorage";
-
 import supabase from "@/config/supabaseClient";
-
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import GetUserReviews from "@/components/GetUserReviews";
+import AddReview from "@/components/AddReview";
 
 export default function ShoeDetails() {
   const { slug } = useParams();
   const router = useRouter();
-
   const [shoeData, setShoeData] = useState<any>({});
   const [sizes, setSizes] = useState<any>([]);
   const [availableSizes, setAvailableSizes] = useState<any>([]);
@@ -84,7 +82,8 @@ export default function ShoeDetails() {
   };
 
   const submitReview = async () => {
-    console.log("shoeData.id:", shoeData.id);
+    console.log("Submitting review:", userReview);
+
     try {
       const { data, error }: { data: any, error: any } = await supabase
         .from("user-reviews")
@@ -116,8 +115,7 @@ export default function ShoeDetails() {
 
 
   return (
-    <div className="h-screen">
-      {/* Hier renderen we de data van de shoeData state. Als de shoeData state leeg is dan laten we een loading icoon zien. */}
+    <div className="h-full">
       {shoeData.name ? (
         <>
           <div className="flex justify-center items-center mt-10">
@@ -125,7 +123,6 @@ export default function ShoeDetails() {
               <div className="flex justify-center border-b-[1.5px] border-gray-500/20">
                 <h1 className="font-bold text-3xl pb-3">{shoeData.name}</h1>
               </div>
-
               <div className="flex flex-row space-x-96 border-b-[1.5px] border-gray-500/20">
                 <div className="flex flex-col">
                   <img
@@ -152,7 +149,6 @@ export default function ShoeDetails() {
                     </div>
                     <div className="flex justify-center">
                       <div className="flex flex-wrap gap-5 w-[25vw] mt-5 ml-6">
-                        {/* Hier mappen we over de schoeninfo heen en daarin checken we welke maten er beschikbaar zijn en welke niet */}
                         {sizes.map((size: number) => {
                           const isAvailable = availableSizes.includes(size);
                           return (
@@ -211,95 +207,32 @@ export default function ShoeDetails() {
                   </tr>
                 </tbody>
               </table>
-              <div className="flex justify-between">
-              <h1 className="text-2xl mt-3">Reviews</h1>
-            </div>
+              <div className="flex justify-between items-center">
+                <h1 className="text-2xl mt-3">Reviews</h1>
+              </div>
 
-            <table className="w-full">
-              <tbody>
-                <tr className="text-[#098C4C] font-bold text-left">
-                  <th>Naam</th>
-                  <th>Rating</th>
-                  <th>Review</th>
-                  <th>Titel</th>
-                </tr>
-                <GetUserReviews shoeId={shoeData.id} />
-              </tbody>
-            </table>
-            <h1 className="text-2xl mt-3">Add Your Review</h1>
-        <div className="flex space-x-8">
-        <div>
-        <h1>Title of your review</h1>
-            <input
-              type="text"
-              name="title"
-              placeholder="Title"
-              value={userReview.title}
-              onChange={handleReviewChange}
-              className="px-4 py-2 border border-gray-300 rounded-md"
-            />
+              <table className="w-full mt-4">
+                <thead>
+                  <tr className="text-[#098C4C] font-bold text-center">
+                    <th className="py-2 px-4">Naam</th>
+                    <th className="py-2 px-4">Rating</th>
+                    <th className="py-2 px-4">Review</th>
+                    <th className="py-2 px-4">Titel</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <GetUserReviews shoeId={shoeData.id} />
+                </tbody>
+              </table>
+            </div>
           </div>
-          <div>
-        <h1>Your name</h1>
-            <input
-              type="text"
-              name="naam"
-              placeholder="Name"
-              value={userReview.naam}
-              onChange={handleReviewChange}
-              className="px-4 py-2 border border-gray-300 rounded-md"
-            />
-          </div>
-          <div>
-        <h1>Rating</h1>
-            <input
-              type="number"
-              name="rating"
-              placeholder="Rating (1-5)"
-              value={userReview.rating}
-              // onChange={handleReviewChange}
-              onInput={(e) => {
-                const inputValue = parseInt(e.currentTarget.value, 10);
-                const min = 1;
-                const max = 5;
-                const clampedValue = Math.min(max, Math.max(min, inputValue));
-                setUserReview((prevReview) => ({
-                  ...prevReview,
-                  rating: clampedValue,
-                }));
-              }}
-              className="px-4 py-2 border border-gray-300 rounded-md"
-            />
-          </div>
-          <div>
-        <h1>Your review</h1>
-        <input
-          type="text"
-          name="review"
-          placeholder="Review (max 100 words)"
-          value={userReview.review}
-          onChange={handleReviewChange}
-          maxLength={100}
-          className="px-4 py-2 border border-gray-300 rounded-md"
-        />
-          </div>
-          <button
-            type="button"
-            onClick={submitReview}
-            className="bg-[#098C4C] text-white px-4 py-2 rounded-md hover:bg-[#246948]"
-          >
-            Submit Review
-          </button>
-          </div>
-          </div>
+        </>
+      ) : (
+        <div className="flex justify-center items-center space-x-5">
+          <div className="text-3xl text-bold">Loading</div>
+          <ArrowPathIcon className="animate-spin h-9 w-9" />
         </div>
-      </>
-    ) : (
-      <div className="flex justify-center items-center space-x-5">
-        <div className="text-3xl text-bold">Loading</div>
-        <ArrowPathIcon className="animate-spin h-9 w-9" />
-      </div>
-    )}
-  </div>
-);
-    }
+      )}
+    </div>
+  );
+}
