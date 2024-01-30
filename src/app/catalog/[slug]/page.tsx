@@ -211,19 +211,9 @@ export default function ShoeDetails() {
                 <h1 className="text-2xl mt-3">Reviews</h1>
               </div>
 
-              <table className="w-full mt-4">
-                <thead>
-                  <tr className="text-[#098C4C] font-bold text-center">
-                    <th className="py-2 px-4">Naam</th>
-                    <th className="py-2 px-4">Rating</th>
-                    <th className="py-2 px-4">Review</th>
-                    <th className="py-2 px-4">Titel</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <GetUserReviews shoeId={shoeData.id} />
-                </tbody>
-              </table>
+              <div>
+              <GetUserReviews shoeId={shoeData.id}/>
+              </div>
             </div>
           </div>
         </>

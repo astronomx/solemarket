@@ -30,7 +30,7 @@ const EditReviewForm: React.FC<EditReviewFormProps> = ({ review, onUpdate }) => 
     <div className="bg-white p-6 rounded-md shadow-md">
   <h1 className="text-2xl font-bold mb-4">Edit Your Review</h1>
   <div className="mb-4">
-    <label htmlFor="naam" className="block text-sm font-semibold mb-1">Naam:</label>
+    <label htmlFor="naam" className="block text-sm font-semibold mb-1">Name:</label>
     <input
       type="text"
       id="naam"
@@ -62,7 +62,7 @@ const EditReviewForm: React.FC<EditReviewFormProps> = ({ review, onUpdate }) => 
     />
   </div>
   <div className="mb-4">
-    <label htmlFor="titel" className="block text-sm font-semibold mb-1">Titel:</label>
+    <label htmlFor="titel" className="block text-sm font-semibold mb-1">Title:</label>
     <input
       type="text"
       id="titel"
