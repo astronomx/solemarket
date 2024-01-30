@@ -1,4 +1,4 @@
-// EditReviewForm.tsx
+// EditReview.tsx
 import React, { useState, useEffect } from "react";
 
 interface EditReviewFormProps {

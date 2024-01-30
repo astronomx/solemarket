@@ -1,4 +1,4 @@
-// GetUserReviews.js
+// AddReview.tsx
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";

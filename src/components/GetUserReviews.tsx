@@ -1,4 +1,4 @@
-// GetUserReviews.js
+// GetUserReviews.tsx
 import { useEffect, useState } from "react";
 import EditReviewForm from "@/components/EditReview";
 import supabase from "@/config/supabaseClient";
