@@ -1,20 +1,19 @@
-// GetUserReviews.tsx
 import { useEffect, useState } from "react";
+import AddReview from "@/components/AddReview";
 import EditReviewForm from "@/components/EditReview";
 import supabase from "@/config/supabaseClient";
 import { XCircleIcon, PencilIcon } from "@heroicons/react/24/solid";
-
+import { GetSession, GetUserEmail } from "@/components/GetSession";
 
 interface Review {
   id: number;
-  naam: string;
   rating: number;
   review: string;
   titel: string;
 }
 
 interface GetUserReviewsProps {
-  shoeId: number; // Pass the shoeId as a prop
+  shoeId: number;
 }
 
 export default function GetUserReviews({ shoeId }: GetUserReviewsProps) {
@@ -22,7 +21,6 @@ export default function GetUserReviews({ shoeId }: GetUserReviewsProps) {
   const [editingReviewId, setEditingReviewId] = useState<number | null>(null);
   const [newReview, setNewReview] = useState<Review>({
     id: 0,
-    naam: "",
     rating: 0,
     review: "",
     titel: "",
@@ -52,7 +50,9 @@ export default function GetUserReviews({ shoeId }: GetUserReviewsProps) {
     getUserReviews();
   }, [shoeId]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setNewReview((prevReview) => ({
       ...prevReview,
@@ -61,13 +61,18 @@ export default function GetUserReviews({ shoeId }: GetUserReviewsProps) {
   };
 
   const addReview = async () => {
+    const userSession = GetSession();
+    if (!userSession) {
+      alert("Please log in to submit a review.");
+      return;
+    }
+
     try {
       const { data, error } = await supabase
         .from("user-reviews")
         .insert([
           {
             shoe_id: shoeId,
-            naam: newReview.naam,
             rating: newReview.rating,
             review: newReview.review,
             titel: newReview.titel,
@@ -84,7 +89,6 @@ export default function GetUserReviews({ shoeId }: GetUserReviewsProps) {
         }
         setNewReview({
           id: 0,
-          naam: "",
           rating: 0,
           review: "",
           titel: "",
@@ -150,23 +154,38 @@ export default function GetUserReviews({ shoeId }: GetUserReviewsProps) {
     }
   };
 
+  const userSession = GetSession();
+
   return (
     <>
       <table className="w-full border-collapse">
         <tbody>
           {userReviews.map((review) => (
-            <tr key={review.id} className="text-[#098C4C] text-left border-b border-gray-300">
-              <td className="py-2 px-4">{review.naam}</td>
+            <tr
+              key={review.id}
+              className="text-[#098C4C] text-left border-b border-gray-300"
+            >
+              <td className="py-2 px-4">{GetUserEmail()}</td>
               <td className="py-2 px-4">{review.rating}</td>
               <td className="py-2 px-4">{review.review}</td>
               <td className="py-2 px-4">{review.titel}</td>
               <td className="py-2 px-4">
-                <button onClick={() => removeReview(review.id)} className="text-red-500 hover:opacity-50">
-                  <XCircleIcon className="w-6 h-6" />
-                </button>
-                <button onClick={() => editReview(review.id)} className="text-black hover:opacity-50 ml-2">
-                  <PencilIcon className="w-6 h-6" />
-                </button>
+                {userSession && (
+                  <>
+                    <button
+                      onClick={() => removeReview(review.id)}
+                      className="text-red-500 hover:opacity-50"
+                    >
+                      <XCircleIcon className="w-6 h-6" />
+                    </button>
+                    <button
+                      onClick={() => editReview(review.id)}
+                      className="text-black hover:opacity-50 ml-2"
+                    >
+                      <PencilIcon className="w-6 h-6" />
+                    </button>
+                  </>
+                )}
               </td>
               {editingReviewId === review.id && (
                 <td colSpan={5}>
@@ -175,57 +194,12 @@ export default function GetUserReviews({ shoeId }: GetUserReviewsProps) {
               )}
             </tr>
           ))}
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl mt-3">Add Reviews</h1>
-          </div>
-          <tr>
-            <td className="py-2 px-4">
-              <input
-                type="text"
-                name="naam"
-                value={newReview.naam}
-                onChange={handleInputChange}
-                placeholder="Name"
-                className="w-full border border-gray-300 p-2"
-              />
-            </td>
-            <td className="py-2 px-4">
-              <input
-                type="number"
-                name="rating"
-                value={newReview.rating}
-                onChange={handleInputChange}
-                placeholder="Rating"
-                className="w-full border border-gray-300 p-2"
-              />
-            </td>
-            <td className="py-2 px-4">
-              <input
-                name="review"
-                value={newReview.review}
-                onChange={handleInputChange}
-                placeholder="Review"
-                className="w-full border border-gray-300 p-2"
-              />
-            </td>
-            <td className="py-2 px-4">
-              <input
-                type="text"
-                name="titel"
-                value={newReview.titel}
-                onChange={handleInputChange}
-                placeholder="Title"
-                className="w-full border border-gray-300 p-2"
-              />
-            </td>
-            <td className="py-2 px-4">
-              <button onClick={addReview} className="bg-[#098C4C] text-white px-4 py-2 rounded">
-                Add Review
-              </button>
-            </td>
-          </tr>
         </tbody>
       </table>
+      <AddReview shoeId={shoeId} />
+      {!userSession && (
+        <h1 className="text-2xl mt-6">Please login if you want to add a review</h1>
+      )}
     </>
   );
 }
