@@ -1,32 +1,31 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useLocalStorage } from "@/app/hooks/useLocalStorage";
-
-// dit is een supabase client die we hebben aangemaakt in de config folder. zodat we de supabase functies kunnen gebruiken.
 import supabase from "@/config/supabaseClient";
-
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import GetUserReviews from "@/components/GetUserReviews";
+import AddReview from "@/components/AddReview";
 
 export default function ShoeDetails() {
   const { slug } = useParams();
   const router = useRouter();
-
-  // Hier maken we een state aan voor de shoeData. Deze state is een object met de volgende properties: name, price, imageURL, slug. De type is <any>
-  // omdat we nog niet weten wat voor data we terug krijgen van de supabase query.
   const [shoeData, setShoeData] = useState<any>({});
   const [sizes, setSizes] = useState<any>([]);
   const [availableSizes, setAvailableSizes] = useState<any>([]);
   const [cart, setCart] = useLocalStorage<{ shoeData: any }[]>("cart", []);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
+  const [userReview, setUserReview] = useState({
+    naam: "",
+    rating: 0,
+    review: "",
+    title: "",
+  });
 
-  // Met de useEffect hook gaan we de data ophalen van de shoe die we willen laten zien. Dit doen we door de slug te gebruiken die we hebben meegegeven in de url.
   useEffect(() => {
     const getShoeDetails = async () => {
-      // Met de .eq() functie kunnen we een waarde meegeven die we willen gebruiken om te filteren. In dit geval gebruiken we de slug om de juiste shoe op te halen.
-      // De .single() functie zorgt ervoor dat we maar 1 resultaat terug krijgen. Als we dit niet doen krijgen we een array terug met 1 object.
       try {
         const { data, error } = await supabase
           .from("shoes")
@@ -34,16 +33,15 @@ export default function ShoeDetails() {
           .eq("slug", slug)
           .single();
 
-        // Als er een error is dan sturen we de gebruiker naar de 404 pagina.
         if (error) {
           router.push("/404");
           return;
         }
 
         if (data) {
-          // Als er geen error is dan zetten we de data in de shoeData state.
-          const { name, brand, gender, category, price, items_left, imageURL, slug } = data;
-          setShoeData({ name, brand, gender, category, price, items_left, imageURL, slug });
+          const { name, brand, gender, category, price, items_left, imageURL, slug, id } = data;
+          setShoeData({ name, brand, gender, category, price, items_left, imageURL, slug, id });
+          console.log("shoeData:", shoeData);
         }
       } catch (error) {
         console.error("Error fetching shoe details:", error);
@@ -52,8 +50,6 @@ export default function ShoeDetails() {
 
     getShoeDetails();
     generateShoeSizes();
-
-    // We voegen de slug en router toe aan de dependency array zodat de useEffect hook opnieuw wordt uitgevoerd als de slug of router veranderd.
   }, [slug, router]);
 
   const updateCart = () => {
@@ -65,24 +61,61 @@ export default function ShoeDetails() {
     }, 3000);
   };
 
-  // Deze functie genereert de schoenmaten die beschikbaar zijn voor de schoen.
   function generateShoeSizes(): void {
     const allSizes: number[] = [];
     for (let size = 3.5; size <= 18; size += 0.5) {
       allSizes.push(size);
     }
 
-    // Randomized de schoenmaten
     const randomlyAvailableSizes = allSizes.filter(() => Math.random() < 0.5);
 
-    // Update de state
     setAvailableSizes(randomlyAvailableSizes);
     setSizes(allSizes);
   }
 
+  const handleReviewChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setUserReview((prevReview) => ({
+      ...prevReview,
+      [name]: value,
+    }));
+  };
+
+  const submitReview = async () => {
+    console.log("Submitting review:", userReview);
+
+    try {
+      const { data, error }: { data: any, error: any } = await supabase
+        .from("user-reviews")
+        .insert([
+          {
+            shoe_id: shoeData.id,
+            naam: userReview.naam,
+            rating: userReview.rating,
+            review: userReview.review,
+            titel: userReview.title,
+          },
+        ]);
+
+      console.log("Insert Data:", data);
+      console.log("Insert Error:", error);
+
+      if (error) {
+        console.error("Error submitting review:", error);
+        alert(`Error submitting review: ${error.message}`);
+      } else {
+        console.log("Review submitted successfully!");
+        alert("Review submitted successfully!");
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      alert(`Error submitting review: ${(error as any).message}`);
+    }
+  };
+
+
   return (
-    <div className="h-screen">
-      {/* Hier renderen we de data van de shoeData state. Als de shoeData state leeg is dan laten we een loading icoon zien. */}
+    <div className="h-full">
       {shoeData.name ? (
         <>
           <div className="flex justify-center items-center mt-10">
@@ -90,7 +123,6 @@ export default function ShoeDetails() {
               <div className="flex justify-center border-b-[1.5px] border-gray-500/20">
                 <h1 className="font-bold text-3xl pb-3">{shoeData.name}</h1>
               </div>
-
               <div className="flex flex-row space-x-96 border-b-[1.5px] border-gray-500/20">
                 <div className="flex flex-col">
                   <img
@@ -117,14 +149,13 @@ export default function ShoeDetails() {
                     </div>
                     <div className="flex justify-center">
                       <div className="flex flex-wrap gap-5 w-[25vw] mt-5 ml-6">
-                        {/* Hier mappen we over de schoeninfo heen en daarin checken we welke maten er beschikbaar zijn en welke niet */}
                         {sizes.map((size: number) => {
                           const isAvailable = availableSizes.includes(size);
                           return (
                             <div key={size}>
                               <div>
                                 {isAvailable ? (
-                                  <button className="text-lg w-14 h-14 rounded-lg ease-in-out duration-300 hover:border-[#098C4C] focus:border-[#098C4C] focus:text-[#098C4C] border-2 border-gray-500/20">
+                                  <button className="text-lg w-14 h-14 rounded-lg ease-in-out duration-300 hover:border-[#098C4C] border-2 border-gray-500/20">
                                     {size}
                                   </button>
                                 ) : (
@@ -176,6 +207,13 @@ export default function ShoeDetails() {
                   </tr>
                 </tbody>
               </table>
+              <div className="flex justify-between items-center">
+                <h1 className="text-2xl mt-3">Reviews</h1>
+              </div>
+
+              <div>
+              <GetUserReviews shoeId={shoeData.id}/>
+              </div>
             </div>
           </div>
         </>
