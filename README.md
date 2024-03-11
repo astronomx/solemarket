@@ -14,19 +14,9 @@ Solemarket is a sneaker website that's inspired by various resell websites like 
 git clone git@github.com:astronomx/solemarket.git
 ```
 
-**Install the dependencies**
+### Install the dependencies**
 ```
 npm install
-```
-
-**Run the project**
-```
-npm run dev
-```
-
-or    
-```
-yarn dev
 ```
 
 or
@@ -39,10 +29,18 @@ or depending on your package manager
 bun dev
 ```
 
-**Pulling env variables from vercel**
+### Pulling env variables from vercel
 ```
 vercel env pull .env.local
 ```
+
+## Run the project
+
+To run the project, make sure you have done every step above. If you did do the following:
+
+1. Install Docker **[click here](https://docs.docker.com/get-docker/)** to install Docker
+2. In your terminal run: docker-compose up (to stop docker gracefully press Ctrl + C)
+3. If you want to delete the image because you've run into some problems run: docker-compose down
 
 After installing the dependencies and running the project you can go to [localhost:3000](http://localhost:3000/) to view the project.
 
