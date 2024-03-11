@@ -39,5 +39,10 @@ or depending on your package manager
 bun dev
 ```
 
+**Pulling env variables from vercel**
+```
+vercel env pull .env.local
+```
+
 After installing the dependencies and running the project you can go to [localhost:3000](http://localhost:3000/) to view the project.
 
